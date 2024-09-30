@@ -1,0 +1,22 @@
+h1
+
+h2{
+    color: bisque;
+}
+body{
+    background-color: black;
+    color: rgb(146, 120, 249);
+}
+
+p{
+    color: rgb(99, 248, 211);
+}
+.wrapper li{
+    color: rgb(255, 196, 0);
+}
+.wrapper > p{
+    text-align: left;
+    color: chocolate;
+    font-style: oblique;
+    font-size: 500%;
+}
