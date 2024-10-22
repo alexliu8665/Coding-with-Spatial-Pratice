@@ -3,18 +3,18 @@ body {
     background-color: #fff;
     color: #000;
     padding: 20px;
-    text-align: center;
+    text-align: left; /* 將文字靠左對齊 */
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ddd;
+    /* 移除邊框 */
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 3em;
     font-weight: 700;
     margin: 10px 0;
 }
@@ -37,6 +37,12 @@ hr {
 
 strong {
     font-weight: 700;
+    font-size: 1.5em; /* 增加字體大小 */
+}
+
+.dark {
+    font-weight: 700; /* 讓 "the pad." 和日期變粗 */
+    font-size: 1.5em; /* 增加字體大小 */
 }
 
 .rsvp {
