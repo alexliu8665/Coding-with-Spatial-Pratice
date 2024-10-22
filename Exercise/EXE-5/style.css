@@ -1,0 +1,55 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  html,
+body {
+  height: 100%;
+}
+body {
+    font-family: Roboto Condensed;
+  }
+body {
+  min-height: 100vh;
+  background-color: rgb(243, 243, 243);
+}
+
+main, header, footer {
+    padding: 20px;
+    border: 1px solid #000000;
+    color: #141414;
+  }
+  
+  header,
+footer {
+  height: 20vh;
+}
+
+main {
+  height: 60vh;
+}
+
+.invite-container {
+padding: 20px;
+}
+
+.selection {
+    padding-bottom: 20px;
+}
+.light {
+    color:rgb(188, 188, 188)
+}
+.dark {
+    font-weight: bold;
+    color:rgb(0, 0, 0)
+}
+
+.big{
+    font-size: 24px;
+}
+.small {
+    font-size: 8pt;
+}
