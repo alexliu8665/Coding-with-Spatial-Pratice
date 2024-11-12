@@ -1,56 +1,98 @@
-/* 保留原樣式 */
-h1 {
-  font-size: 50pt;
+/* General Styles */
+body {
+  background-color: rgb(245, 245, 245);
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Header Section */
+#hero {
+  position: relative;
   text-align: center;
-  color: rgb(0, 90, 125);
+}
+
+.hero-image {
+  position: relative;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+  font-size: 36pt; /* Adjusted to fit in one line */
+  letter-spacing: 1px; /* Slight letter-spacing for clarity */
+  margin: 0;
 }
 
 h2 {
-  font-size: larger;
-  text-align: center;
-  color: rgb(0, 90, 125);
+  font-size: medium;
+  margin: 5px 0 0;
 }
 
-em {
-  color: rgb(178, 178, 178);
-  display: flex;
-  justify-content: center; /* 將 footer 文字置中 */
-}
-
-body {
-  background-color: rgb(245, 245, 245);
-}
-
-/* 新增樣式 */
-#hero {
-  display: flex;
-  align-items: flex-start; /* 將圖片和文字對齊至頂部 */
-  padding: 20px;
-}
-
-#hero img {
-  width: 50%; /* 圖片佔一半寬度 */
-  object-fit: cover;
-}
-
-#hero .text-content {
-  width: 50%; /* 文字區塊佔一半寬度 */
-  padding-left: 20px;
-  text-align: left; /* 左對齊文字 */
-}
-
-#hero .text-content h1, 
-#hero .text-content h2 {
-  text-align: left; /* 左對齊所有標題 */
-}
-
-/* 新增 .main-content 區塊樣式 */
+/* Main Content Layout */
 .main-content {
   display: flex;
   padding: 20px;
   gap: 20px;
 }
 
-#content, #biography {
-  width: 50%; /* 內容區塊和傳記區塊各佔一半寬度 */
+#content {
+  width: 70%; /* Content section width */
+}
+
+#biography {
+  width: 30%; /* Biography section width */
+}
+
+h3 {
+  color: rgb(0, 90, 125);
+  margin-top: 0;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Biography Section with Outline and Matching Background */
+.biography-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px; /* Adds some spacing inside the outline */
+  border: 2px solid rgba(0, 90, 125, 0.8); /* Outline with theme color */
+  border-radius: 8px; /* Rounds the corners of the outline */
+  background-color: rgba(0, 90, 125, 0.8); /* Matching background color inside the outline */
+  color: white; /* Optional: make text white for better readability */
+}
+
+.biography-image {
+  width: 30%;
+}
+
+.biography-text {
+  width: 70%;
+}
+
+.biography-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Footer */
+footer {
+  padding: 10px;
+  background-color: #f0f0f0;
+  text-align: center;
+  color: rgb(178, 178, 178);
 }
