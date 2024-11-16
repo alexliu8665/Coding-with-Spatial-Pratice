@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Invitation Container */
+        .invitation-container {
+            background-color: white;
+            width: 350px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Header Image Container */
+        .header-image {
+            width: 100%;
+            height: 200px; /* Increased height for a larger header */
+            background-size: cover;
+            background-position: center;
+            background-image: url('pics/LIC BBQ.jpg'); /* Update with the correct path to your image */
+            position: relative;
+        }
+
+        /* Text on Header */
+        .header-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 36px; /* Large font for emphasis */
+            font-weight: 700;
+            color: white; /* White text for contrast */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for readability */
+            white-space: nowrap; /* Ensures the text stays on one line */
+        }
+
+        /* Smaller Subtext */
+        .invitation-subtext {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px; /* Smaller font size for the rest of the text */
+            font-weight: 400;
+            color: #333;
+            margin: 10px 20px;
+            line-height: 1.4;
+        }
+
+        /* Bold Text */
+        .bold {
+            font-weight: bold;
+        }
+
+        /* Details Section */
+        .details {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            margin: 20px;
+            text-align: left; /* Aligns text to the left */
+            padding-left: 20px; /* Indents the text slightly */
+        }
+
+        /* BBQ Section with Line */
+        .line {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .bbq-section {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            margin: 0 20px;
+        }
+
+        /* Footer Text */
+        .footer-text {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <!-- Header Image with Text -->
+        <div class="header-image">
+            <div class="header-text">You’re Invited!!</div>
+        </div>
+
+        <!-- Smaller Subtext -->
+        <p class="invitation-subtext">
+            <span class="bold">Alex & Bing</span> are hosting a house party, and we want <span class="bold">YOU</span> there!
+        </p>
+
+        <!-- Details Section -->
+        <p class="details">
+            📅 <span class="highlight">Thursday, 11/23</span><br>
+            📍 <span class="highlight">2830 Jackson Ave, LIC</span><br>
+            🍹 <span class="highlight">Bring anything you want!</span>
+        </p>
+
+        <!-- Horizontal Line -->
+        <hr class="line">
+
+        <!-- BBQ Section -->
+        <div class="bbq-section">
+            We’ll have an <span class="bold">outdoor BBQ</span> if the weather allows. Too cold? We’ll head inside the apartment instead.
+        </div>
+
+        <!-- Footer Text -->
+        <p class="footer-text">See you there! 🎉</p>
+    </div>
+</body>
+</html>
