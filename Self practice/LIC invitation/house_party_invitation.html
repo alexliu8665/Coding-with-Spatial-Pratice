@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Party Invitation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* General Styles */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #f8f8f8;
+            font-family: 'Lora', serif;
+            background-color: #fdf5e6; /* Light beige background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,17 +30,17 @@
             text-align: center;
         }
 
-        /* Header Image Container */
+        /* Header Image */
         .header-image {
             width: 100%;
             height: 200px;
             background-size: cover;
             background-position: center;
-            background-image: url('pics/LIC BBQ.jpg');
+            background-image: url('pics/LIC BBQ.jpg'); /* Update with your image path */
             position: relative;
         }
 
-        /* Text on Header */
+        /* Header Text on Image */
         .header-text {
             position: absolute;
             top: 50%;
@@ -50,13 +51,12 @@
             font-weight: 700;
             color: white;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            white-space: nowrap;
         }
 
-        /* Smaller Subtext */
+        /* Subheading */
         .invitation-subtext {
-            font-family: 'Roboto', sans-serif;
-            font-size: 14px;
+            font-family: 'Lora', serif;
+            font-size: 16px;
             font-weight: 400;
             color: #333;
             margin: 10px 20px;
@@ -65,12 +65,12 @@
 
         /* Bold Text */
         .bold {
-            font-weight: bold;
+            font-weight: 700;
         }
 
         /* Details Section */
         .details {
-            font-size: 14px;
+            font-size: 16px;
             color: #333;
             line-height: 1.5;
             margin: 20px;
@@ -85,15 +85,21 @@
             font-weight: bold;
         }
 
-        /* BBQ Section with Line */
+        .map-link:hover {
+            color: #0056b3; /* Darker blue on hover */
+            text-decoration: underline;
+        }
+
+        /* Line Divider */
         .line {
             border: 0;
             border-top: 1px solid #ccc;
             margin: 20px 0;
         }
 
+        /* BBQ Section */
         .bbq-section {
-            font-size: 14px;
+            font-size: 16px;
             color: #333;
             line-height: 1.5;
             margin: 0 20px;
@@ -102,7 +108,8 @@
         /* Footer Text */
         .footer-text {
             font-size: 14px;
-            color: #555;
+            color: #777;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -113,19 +120,19 @@
             <div class="header-text">You’re Invited!!</div>
         </div>
 
-        <!-- Smaller Subtext -->
+        <!-- Subheading -->
         <p class="invitation-subtext">
             <span class="bold">Alex & Bing</span> are hosting a house party, and we want <span class="bold">YOU</span> there!
         </p>
 
         <!-- Details Section -->
         <p class="details">
-            📅 <span class="highlight">Thursday, 11/23</span><br>
+            📅 <strong>Thursday, 11/23</strong><br>
             📍 <a href="https://maps.google.com/?q=2830+Jackson+Ave,+LIC" target="_blank" class="map-link">2830 Jackson Ave, LIC</a><br>
-            🍹 <span class="highlight">Bring anything you want!</span>
+            🍹 Bring anything you want!
         </p>
 
-        <!-- Horizontal Line -->
+        <!-- Line Divider -->
         <hr class="line">
 
         <!-- BBQ Section -->
