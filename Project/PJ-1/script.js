@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (i >= totalImages) return;
         const img = document.createElement("img");
         // 確保使用 GitHub Pages 的絕對路徑
-        img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${(i % totalImages) + 1}.JPG`;
+        img.src = `Project/PJ-1/Images/${(i % totalImages) + 1}.`;
         img.alt = `Image ${(i % totalImages) + 1}`;
         img.style.width = "100%";
         img.style.height = "auto";
