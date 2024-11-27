@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const img = document.createElement("img");
         // 使用 GitHub Pages 上的圖片路徑
         img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/images/${(i % totalImages) + 1}.jpg`;
-        img.alt = `Image ${(i % totalImages) + 1}`;
+        img.alt = `image ${(i % totalImages) + 1}`;
         img.style.width = "100%";
         img.style.height = "auto";
         img.style.marginBottom = "10px";
