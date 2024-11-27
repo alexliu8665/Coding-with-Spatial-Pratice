@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const imageGrid = document.getElementById("imageGrid");
-  let loadedImages = 0; // 已加載的圖片數量
+  let loadedImages = 20; // 已加載的圖片數量
   const imagesPerLoad = 5; // 每次滾動加載的圖片數量
-  const totalImages = 20; // 總圖片數量（根據您的圖片數量調整）
+  const totalImages = 50; // 總圖片數量（根據您的圖片數量調整）
 
   // 加載圖片函數
   function loadImages() {
