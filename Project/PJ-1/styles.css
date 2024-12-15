@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
   background-color: #000;
-  color: #fff;
+  font-family: Arial, sans-serif;
 }
 
 .image-grid {
@@ -15,8 +14,6 @@ body {
 .image-grid img {
   width: 100%;
   height: auto;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
   transition: transform 0.2s;
 }
 
@@ -24,23 +21,22 @@ body {
   transform: scale(1.05);
 }
 
-/* 隱藏文字框 */
-.hidden {
-  display: none;
-}
-
-/* 半透明背景 + 文字置中 */
-.overlay-text {
+.text-overlay {
+  display: none; /* 初始不顯示 */
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.7);
-  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 2rem;
+  padding: 20px;
   border-radius: 8px;
   text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #000; /* 字體顏色 */
-  z-index: 10;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
