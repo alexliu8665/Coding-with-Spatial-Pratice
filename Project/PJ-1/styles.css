@@ -6,7 +6,7 @@ body {
   
   .image-grid {
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* 每行顯示 5 列 */
+    grid-template-columns: repeat(5, 1fr); /* 每行顯示 5 列 */
     gap: 10px;
     padding: 20px;
   }
