@@ -11,39 +11,38 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < maxImagesToLoad; i++) {
       const img = document.createElement("img");
       const imageIndex = loadedImages + i + 1; // 計算圖片索引
-      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
+      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Practice/Project/PJ-1/Images/${imageIndex}.JPG`;
       img.alt = `Image ${imageIndex}`;
+
       img.onerror = () => {
-        console.error(`Image ${imageIndex} failed to load.`);
+        console.warn(`Image ${imageIndex} failed to load.`);
       };
+
       imageGrid.appendChild(img);
     }
     loadedImages += maxImagesToLoad;
 
-    // 如果所有圖片加載完成，移除滾動事件監聽器
+    // 所有圖片加載完成後
     if (loadedImages >= totalImages) {
       window.removeEventListener("scroll", handleScroll);
-      showOverlayText(); // 顯示文字框
+      showOverlayText();
     }
   }
 
   // 顯示文字框
   function showOverlayText() {
     overlayText.classList.remove("hidden"); // 移除 hidden 類
+    console.log("All images loaded. Showing overlay text...");
   }
 
-  // 滾動檢測函數（帶防抖）
-  let isScrolling;
+  // 滾動檢測函數
   function handleScroll() {
-    clearTimeout(isScrolling);
-    isScrolling = setTimeout(() => {
-      const scrollPosition = window.innerHeight + window.scrollY; // 當前滾動位置
-      const threshold = document.body.offsetHeight - 50; // 頁面底部的閾值
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.documentElement.scrollHeight - 100; // 使用更準確的高度檢測
 
-      if (scrollPosition >= threshold) {
-        loadImages(); // 滾動到底部時加載更多圖片
-      }
-    }, 200); // 延遲 200 毫秒
+    if (scrollPosition >= threshold) {
+      loadImages();
+    }
   }
 
   // 初次加載圖片
