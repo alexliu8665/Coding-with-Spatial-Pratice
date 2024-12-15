@@ -12,26 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const imageIndex = loadedImages + i + 1;
       img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
       img.alt = `圖片 ${imageIndex}`;
-      img.style.width = "100%";
-      img.style.height = "auto";
-      img.style.marginBottom = "10px";
       imageGrid.appendChild(img);
     }
     loadedImages += maxImagesToLoad;
 
-    // 所有圖片加載完成後顯示文字
     if (loadedImages >= totalImages) {
       window.removeEventListener("scroll", handleScroll);
-      showMessage(); // 顯示文字
     }
-  }
-
-  // 顯示文字的函數
-  function showMessage() {
-    const message = document.createElement("div");
-    message.textContent = "I would love to live on the planet that are _____";
-    message.classList.add("overlay-text"); // 添加 CSS 樣式類
-    document.body.appendChild(message); // 添加到 body
   }
 
   // 滾動事件檢測
