@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Grid with Special Effect</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Image and Text Loader</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="imageGrid" class="image-grid"></div> <!-- 圖片容器 -->
-  <div id="textOverlay" class="text-overlay">I would love to live on the planet that are _____</div>
-  <script src="script.js" defer></script>
+    <div class="container">
+        <!-- 初始內容 -->
+        <div class="content">
+            <img src="https://via.placeholder.com/500x300" alt="Placeholder Image">
+            <p>這是第 1 個文字框。</p>
+        </div>
+        <div class="content">
+            <img src="https://via.placeholder.com/500x300" alt="Placeholder Image">
+            <p>這是第 2 個文字框。</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>

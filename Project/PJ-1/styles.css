@@ -1,42 +1,39 @@
-body {
+/* 基本樣式重置 */
+* {
   margin: 0;
-  background-color: #000;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
 }
 
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  padding: 20px;
+.container {
+  width: 80%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.image-grid img {
+.content {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.content img {
   width: 100%;
   height: auto;
-  transition: transform 0.2s;
+  display: block;
+  margin: 0 auto 10px;
 }
 
-.image-grid img:hover {
-  transform: scale(1.05);
-}
-
-.text-overlay {
-  display: none; /* 初始不顯示 */
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-size: 2rem;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  animation: fadeIn 2s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.content p {
+  font-size: 16px;
+  color: #333;
 }
