@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,32 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="imageGrid" class="image-grid"></div>
-  <div class="overlay-text">
-    <span>I would love to live on the planet that are ______</span>
-  </div>
+  <header>
+    <h1>Perfect Planet</h1>
+    <p>Select an adjective to explore your ideal world.</p>
+  </header>
+  <main>
+    <div id="filterLabel" class="filter-label">All Images</div>
+    <div id="imageGrid" class="image-grid"></div>
+    <div class="overlay-text">
+      <span><strong>I would love to live on the planet that is </strong></span>
+      <select id="planetSelect">
+        <option value="" disabled selected>Choose...</option>
+        <option value="Energetic">Energetic</option>
+        <option value="Lonely">Lonely</option>
+        <option value="Verdant">Verdant</option>
+        <option value="Oceanic">Oceanic</option>
+        <option value="Desolate">Desolate</option>
+        <option value="Radiant">Radiant</option>
+        <option value="Mysterious">Mysterious</option>
+        <option value="Arid">Arid</option>
+        <option value="Futuristic">Futuristic</option>
+        <option value="Azure">Azure</option>
+        <option value="Luminous">Luminous</option>
+        <option value="Pulsating">Pulsating</option>
+      </select>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

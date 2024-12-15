@@ -1,63 +1,46 @@
-/* 全局樣式重置 */
+/* Global Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #000; /* 網頁背景為黑色 */
-  color: #fff; /* 全局文字設為白色 */
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
 }
 
-/* 圖片網格 */
+/* Image Grid */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 五列等寬 */
-  gap: 10px; /* 圖片間隔 */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive columns */
+  gap: 10px; /* Spacing between images */
   padding: 20px;
 }
 
 .image-grid img {
   width: 100%;
   height: auto;
-  border-radius: 4px; /* 圖片圓角效果 */
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* 微白色陰影 */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* Light white shadow */
   transition: transform 0.2s;
 }
 
 .image-grid img:hover {
-  transform: scale(1.05); /* 滑鼠懸停時放大 */
+  transform: scale(1.05); /* Scale up on hover */
 }
 
-/* 黑底白字文字框 */
+/* Filter Label */
+.filter-label {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 18px;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Overlay Text */
 .overlay-text {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5); /* 黑色背景，50% 透明度 */
-  padding: 20px 40px; /* 內邊距 */
-  border-radius: 8px; /* 圓角 */
-  text-align: center; /* 文字居中 */
-  font-size: 24px; /* 字體大小 */
-  font-weight: bold; /* 字體加粗 */
-  color: #fff !important; /* 白色文字並強制生效 */
-  z-index: 10; /* 確保在最上層 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 黑色陰影效果 */
+  text-align: center;
+  margin: 20px;
 }
 
-/* 自定義滾動條 (可選) */
-body::-webkit-scrollbar {
-  width: 8px;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3); /* 半透明白色滾動條 */
-  border-radius: 10px;
-}
-
-body::-webkit-scrollbar-track {
-  background-color: #000; /* 滾動條背景為黑色 */
-}
-
-/* 美化下拉選單 */
 select#planetSelect {
   font-size: 20px;
   padding: 5px 10px;
