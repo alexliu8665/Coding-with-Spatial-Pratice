@@ -32,7 +32,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.8); /* 黑色背景，80% 透明度 */
+  background: rgba(0, 0, 0, 0.5); /* 黑色背景，50% 透明度 */
   padding: 20px 40px; /* 內邊距 */
   border-radius: 8px; /* 圓角 */
   text-align: center; /* 文字居中 */
@@ -55,4 +55,21 @@ body::-webkit-scrollbar-thumb {
 
 body::-webkit-scrollbar-track {
   background-color: #000; /* 滾動條背景為黑色 */
+}
+
+/* 美化下拉選單 */
+select#planetSelect {
+  font-size: 20px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  outline: none;
+}
+
+select#planetSelect:focus {
+  border: 2px solid #555;
 }
