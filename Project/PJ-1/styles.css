@@ -1,16 +1,13 @@
-/* 全局樣式 */
 body {
   margin: 0;
-  font-family: Arial, sans-serif, "微軟正黑體", "PingFang TC", "Noto Sans TC", sans-serif;
-  background-color: #000; /* 背景設為黑色 */
-  color: #fff; /* 文字顏色設為白色 */
-  position: relative;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
 }
 
-/* 圖片網格 */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 每行 5 列 */
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   padding: 20px;
 }
@@ -19,6 +16,7 @@ body {
   width: 100%;
   height: auto;
   border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
   transition: transform 0.2s;
 }
 
@@ -26,19 +24,18 @@ body {
   transform: scale(1.05);
 }
 
-/* 中央文字樣式 */
-.center-text {
-  position: absolute; /* 絕對定位 */
-  top: 50%; /* 垂直居中 */
-  left: 50%; /* 水平居中 */
-  transform: translate(-50%, -50%); /* 精確居中 */
-  background: rgba(255, 255, 255, 0.8); /* 半透明背景 */
-  color: #000; /* 文字顏色設為黑色 */
-  font-size: 2rem; /* 文字大小 */
-  font-weight: bold;
-  text-align: center;
+/* 半透明背景 + 文字置中 */
+.overlay-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.7);
   padding: 20px 40px;
-  border-radius: 8px; /* 圓角邊框 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
-  z-index: 10; /* 確保文字在最上方 */
+  border-radius: 8px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000; /* 字體顏色 */
+  z-index: 10;
 }
