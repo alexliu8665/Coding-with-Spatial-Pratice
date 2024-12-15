@@ -1,40 +1,43 @@
-// 選取容器
-const container = document.querySelector('.container');
+// script.js
 
-// 紀錄新增內容數量
-let contentCount = 2;
+// Container for the images
+const imageContainer = document.getElementById("image-container");
 
-// 滾動事件監聽
-window.addEventListener('scroll', () => {
-    // 如果滾動到底部
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
-        addNewContent();
-    }
-});
+// Number of images to load initially
+const initialImageCount = 20;
 
-// 新增內容的函數
-function addNewContent() {
-    for (let i = 0; i < 3; i++) {
-        contentCount++;
-        
-        // 創建新的內容
-        const newContent = document.createElement('div');
-        newContent.classList.add('content');
-        
-        // 添加圖片
-        const newImage = document.createElement('img');
-        newImage.src = 'https://via.placeholder.com/500x300';
-        newImage.alt = 'Placeholder Image';
-        
-        // 添加文字框
-        const newText = document.createElement('p');
-        newText.textContent = `這是第 ${contentCount} 個文字框。`;
-        
-        // 將圖片和文字加入新內容
-        newContent.appendChild(newImage);
-        newContent.appendChild(newText);
-        
-        // 將新內容加入容器
-        container.appendChild(newContent);
+// Number of images to load per scroll
+const loadMoreCount = 10;
+
+// Image path base URL
+const baseUrl = "https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/";
+
+// Function to create an image element
+function createImage(index) {
+    const img = document.createElement("img");
+    img.src = `${baseUrl}${index}.JPG`;
+    img.alt = `Image ${index}`;
+    img.onerror = () => {
+        console.error(`Image ${index} failed to load.`);
+    };
+    return img;
+}
+
+// Function to load images
+function loadImages(start, count) {
+    for (let i = start; i < start + count; i++) {
+        const imgElement = createImage(i);
+        imageContainer.appendChild(imgElement);
     }
 }
+
+// Initial load of images
+loadImages(1, initialImageCount);
+
+// Infinite scroll
+window.addEventListener("scroll", () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        const currentImageCount = imageContainer.childElementCount;
+        loadImages(currentImageCount + 1, loadMoreCount);
+    }
+});
