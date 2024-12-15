@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const imageIndex = loadedImages + i + 1; // 當前圖片索引
       img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`; // 圖片的絕對路徑
       img.alt = `圖片 ${imageIndex}`; // 替代文字
-      img.style.width = "100%";
+      img.style.width = "100%"; // 確保圖片適應網格
       img.style.height = "auto";
       img.style.marginBottom = "10px";
       imageGrid.appendChild(img); // 將圖片加入容器
