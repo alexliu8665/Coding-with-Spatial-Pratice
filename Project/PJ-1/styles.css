@@ -24,11 +24,6 @@ body {
   transform: scale(1.05);
 }
 
-/* 隱藏文字框 */
-.hidden {
-  display: none;
-}
-
 /* 半透明背景 + 文字置中 */
 .overlay-text {
   position: fixed;
