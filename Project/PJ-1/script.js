@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const imageIndex = loadedImages + i + 1; // 計算圖片索引
       img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
       img.alt = `Image ${imageIndex}`;
+      img.onerror = () => {
+        console.error(`Image ${imageIndex} failed to load.`);
+      };
       imageGrid.appendChild(img);
     }
     loadedImages += maxImagesToLoad;
@@ -29,14 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
     overlayText.classList.remove("hidden"); // 移除 hidden 類
   }
 
-  // 滾動檢測函數
+  // 滾動檢測函數（帶防抖）
+  let isScrolling;
   function handleScroll() {
-    const scrollPosition = window.innerHeight + window.scrollY; // 當前滾動位置
-    const threshold = document.body.offsetHeight - 50; // 頁面底部的閾值
+    clearTimeout(isScrolling);
+    isScrolling = setTimeout(() => {
+      const scrollPosition = window.innerHeight + window.scrollY; // 當前滾動位置
+      const threshold = document.body.offsetHeight - 50; // 頁面底部的閾值
 
-    if (scrollPosition >= threshold) {
-      loadImages(); // 滾動到底部時加載更多圖片
-    }
+      if (scrollPosition >= threshold) {
+        loadImages(); // 滾動到底部時加載更多圖片
+      }
+    }, 200); // 延遲 200 毫秒
   }
 
   // 初次加載圖片
