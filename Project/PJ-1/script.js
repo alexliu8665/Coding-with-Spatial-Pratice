@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     loadedImages += maxImagesToLoad;
 
-    // 如果所有圖片加載完成，顯示文字
+    // 所有圖片加載完成後顯示文字
     if (loadedImages >= totalImages) {
       console.log("所有圖片已加載完成");
       window.removeEventListener("scroll", handleScroll);
-      showMessage(); // 調用函數顯示文字
+      showMessage(); // 顯示文字
     }
   }
 
@@ -34,26 +34,28 @@ document.addEventListener("DOMContentLoaded", () => {
     message.style.textAlign = "center";
     message.style.color = "#fff";
     message.style.fontSize = "1.5em";
-    message.style.margin = "20px 0";
-    document.body.appendChild(message);
+    message.style.margin = "30px auto";
+    message.style.padding = "10px";
+    message.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    message.style.width = "100%";
+
+    document.body.appendChild(message); // 直接插入到 body 最底部
+    console.log("文字已插入到頁面底部");
   }
 
-  // 滾動事件處理函數
+  // 滾動事件檢測
   function handleScroll() {
-    console.log("滾動觸發");
     const scrollPosition = window.innerHeight + window.scrollY;
     const threshold = document.body.offsetHeight - 100;
 
     if (scrollPosition >= threshold) {
-      console.log("開始加載更多圖片...");
       loadImages();
     }
   }
 
-  // 初次加載多批圖片
+  // 初始加載圖片
   loadImages();
   loadImages();
 
-  // 監聽滾動事件
   window.addEventListener("scroll", handleScroll);
 });
