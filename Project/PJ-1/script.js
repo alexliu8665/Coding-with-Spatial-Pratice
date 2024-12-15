@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const imageGrid = document.getElementById("imageGrid");
   const overlayText = document.querySelector(".overlay-text");
   const totalImages = 50;
-  let loadedImages = 0;
+  let loadedImages = 20;
   const imagesPerLoad = 20;
 
   // 加載圖片函數
