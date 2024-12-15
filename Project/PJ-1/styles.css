@@ -1,15 +1,15 @@
-/* 重置基礎樣式 */
+/* 全局樣式重置 */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #000; /* 背景設為黑色 */
-  color: #fff; /* 全局文字顏色設為白色 */
+  background-color: #000; /* 網頁背景為黑色 */
+  color: #fff; /* 全局文字設為白色 */
 }
 
 /* 圖片網格 */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5列等寬 */
+  grid-template-columns: repeat(5, 1fr); /* 五列等寬 */
   gap: 10px; /* 圖片間隔 */
   padding: 20px;
 }
@@ -17,13 +17,13 @@ body {
 .image-grid img {
   width: 100%;
   height: auto;
-  border-radius: 4px; /* 圓角效果 */
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* 白色微陰影效果 */
+  border-radius: 4px; /* 圖片圓角效果 */
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* 微白色陰影 */
   transition: transform 0.2s;
 }
 
 .image-grid img:hover {
-  transform: scale(1.05); /* 滑鼠懸停時放大效果 */
+  transform: scale(1.05); /* 滑鼠懸停時放大 */
 }
 
 /* 黑底白字文字框 */
@@ -32,27 +32,27 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.8); /* 黑色背景，80% 不透明度 */
-  padding: 20px 40px;
-  border-radius: 8px; /* 圓角效果 */
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #fff; /* 文字設為白色 */
-  z-index: 10; /* 確保文字框顯示在最上層 */
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3); /* 白色陰影增強質感 */
+  background: rgba(0, 0, 0, 0.8); /* 黑色背景，80% 透明度 */
+  padding: 20px 40px; /* 內邊距 */
+  border-radius: 8px; /* 圓角 */
+  text-align: center; /* 文字居中 */
+  font-size: 24px; /* 字體大小 */
+  font-weight: bold; /* 字體加粗 */
+  color: #fff !important; /* 白色文字並強制生效 */
+  z-index: 10; /* 確保在最上層 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 黑色陰影效果 */
 }
 
-/* 滾動條隱藏（可選） */
+/* 自定義滾動條 (可選) */
 body::-webkit-scrollbar {
   width: 8px;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3); /* 滾動條設置為白色半透明 */
+  background-color: rgba(255, 255, 255, 0.3); /* 半透明白色滾動條 */
   border-radius: 10px;
 }
 
 body::-webkit-scrollbar-track {
-  background-color: #000; /* 滾動條背景設置為黑色 */
+  background-color: #000; /* 滾動條背景為黑色 */
 }
