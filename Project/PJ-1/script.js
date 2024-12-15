@@ -26,11 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 滾動檢測函數
+
   function handleScroll() {
     const scrollPosition = window.innerHeight + window.scrollY; // 當前滾動位置
-    const threshold = document.body.offsetHeight - 50; // 頁面底部的閾值（減少延遲）
-
+    const threshold = document.body.offsetHeight - 50; // 頁面底部的閾值
+  
+    console.log("Scroll position:", scrollPosition, "Threshold:", threshold);
+  
     if (scrollPosition >= threshold) {
+      console.log("Loading more images...");
       loadImages(); // 滾動到底部時加載更多圖片
     }
   }
