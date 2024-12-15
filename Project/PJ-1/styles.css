@@ -1,13 +1,15 @@
+/* 全局樣式 */
 body {
   margin: 0;
   font-family: Arial, sans-serif, "微軟正黑體", "PingFang TC", "Noto Sans TC", sans-serif;
-  background-color: #000; /* 背景黑色 */
-  color: #fff; /* 文字白色 */
+  background-color: #000; /* 背景設為黑色 */
+  color: #fff; /* 文字顏色設為白色 */
 }
 
+/* 圖片網格 */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 每行顯示5列 */
+  grid-template-columns: repeat(5, 1fr); /* 每行 5 列 */
   gap: 10px;
   padding: 20px;
 }
@@ -16,10 +18,26 @@ body {
   width: 100%;
   height: auto;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* 白色陰影 */
   transition: transform 0.2s;
 }
 
 .image-grid img:hover {
-  transform: scale(1.05); /* 滑過時放大效果 */
+  transform: scale(1.05);
+}
+
+/* 文字顯示效果 */
+.overlay-text {
+  position: fixed; /* 固定在畫面中央 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.8); /* 白色半透明背景 */
+  color: #000; /* 黑色文字 */
+  font-weight: bold;
+  font-size: 2rem; /* 文字大小 */
+  padding: 20px 40px;
+  border-radius: 8px;
+  text-align: center;
+  z-index: 999; /* 確保文字顯示在最前方 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
 }

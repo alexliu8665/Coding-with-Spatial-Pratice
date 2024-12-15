@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 所有圖片加載完成後顯示文字
     if (loadedImages >= totalImages) {
-      console.log("所有圖片已加載完成");
       window.removeEventListener("scroll", handleScroll);
       showMessage(); // 顯示文字
     }
@@ -30,17 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // 顯示文字的函數
   function showMessage() {
     const message = document.createElement("div");
-    message.textContent = "I would love to live in a world that _";
-    message.style.textAlign = "center";
-    message.style.color = "#fff";
-    message.style.fontSize = "1.5em";
-    message.style.margin = "30px auto";
-    message.style.padding = "10px";
-    message.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-    message.style.width = "100%";
-
-    document.body.appendChild(message); // 直接插入到 body 最底部
-    console.log("文字已插入到頁面底部");
+    message.textContent = "I would love to live on the planet that are _____";
+    message.classList.add("overlay-text"); // 添加 CSS 樣式類
+    document.body.appendChild(message); // 添加到 body
   }
 
   // 滾動事件檢測
