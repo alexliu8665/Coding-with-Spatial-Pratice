@@ -1,39 +1,46 @@
-/* 基本樣式重置 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #000;
+  color: #fff;
 }
 
-.container {
-  width: 80%;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 20px;
 }
 
-.content {
-  background: #fff;
-  padding: 15px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.content img {
+.image-grid img {
   width: 100%;
   height: auto;
-  display: block;
-  margin: 0 auto 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s;
 }
 
-.content p {
-  font-size: 16px;
-  color: #333;
+.image-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* 隱藏文字框 */
+.hidden {
+  display: none;
+}
+
+/* 半透明背景 + 文字置中 */
+.overlay-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px 40px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000; /* 字體顏色 */
+  z-index: 10;
 }

@@ -1,51 +1,47 @@
-let imageContainer = document.getElementById('image-container');
-let loadingMessage = document.getElementById('loading-message');
-let currentIndex = 1; // 從第 1 張圖片開始
-const totalImages = 20; // 總共 20 張圖片
-let isLoading = false;
+document.addEventListener("DOMContentLoaded", () => {
+  const imageGrid = document.getElementById("imageGrid");
+  const overlayText = document.querySelector(".overlay-text");
+  const totalImages = 50;
+  let loadedImages = 0;
+  const imagesPerLoad = 20;
 
-// 初始載入 5 個元素
-loadMoreContent();
-
-// 監聽滾動事件
-window.addEventListener('scroll', () => {
-    if (isLoading) return;
-
-    // 當滾動到底部時
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
-        loadMoreContent();
+  // 加載圖片函數
+  function loadImages() {
+    const maxImagesToLoad = Math.min(totalImages - loadedImages, imagesPerLoad);
+    for (let i = 0; i < maxImagesToLoad; i++) {
+      const img = document.createElement("img");
+      const imageIndex = loadedImages + i + 1; // 計算圖片索引
+      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
+      img.alt = `Image ${imageIndex}`;
+      imageGrid.appendChild(img);
     }
+    loadedImages += maxImagesToLoad;
+
+    // 如果所有圖片加載完成，移除滾動事件監聽器
+    if (loadedImages >= totalImages) {
+      window.removeEventListener("scroll", handleScroll);
+      showOverlayText(); // 顯示文字框
+    }
+  }
+
+  // 顯示文字框
+  function showOverlayText() {
+    overlayText.classList.remove("hidden"); // 移除 hidden 類
+  }
+
+  // 滾動檢測函數
+  function handleScroll() {
+    const scrollPosition = window.innerHeight + window.scrollY; // 當前滾動位置
+    const threshold = document.body.offsetHeight - 50; // 頁面底部的閾值
+
+    if (scrollPosition >= threshold) {
+      loadImages(); // 滾動到底部時加載更多圖片
+    }
+  }
+
+  // 初次加載圖片
+  loadImages();
+
+  // 監聽滾動事件
+  window.addEventListener("scroll", handleScroll);
 });
-
-// 加載更多內容的函數
-function loadMoreContent() {
-    isLoading = true;
-    loadingMessage.style.display = 'block';
-
-    setTimeout(() => {
-        for (let i = 0; i < 5 && currentIndex <= totalImages; i++) {
-            // 加載圖片框
-            let imageBox = document.createElement('div');
-            imageBox.className = 'image-box';
-            let img = document.createElement('img');
-            img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${currentIndex}.JPG`;
-            img.alt = `圖片 ${currentIndex}`;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
-            imageBox.appendChild(img);
-            imageContainer.appendChild(imageBox);
-
-            // 加載文字框
-            let textBox = document.createElement('div');
-            textBox.className = 'text-box';
-            textBox.textContent = `這是第 ${currentIndex} 個文字框。`;
-            imageContainer.appendChild(textBox);
-
-            currentIndex++;
-        }
-
-        isLoading = false;
-        loadingMessage.style.display = 'none';
-    }, 1000); // 模擬加載時間 1 秒
-}
