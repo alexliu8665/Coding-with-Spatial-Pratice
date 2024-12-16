@@ -4,36 +4,21 @@ body {
   font-family: Arial, sans-serif;
   background-color: #000; /* Black background */
   color: #fff; /* White text */
-}
-
-/* Image Grid */
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Fixed 5 columns */
-  gap: 10px; /* Spacing between images */
-  padding: 20px;
-}
-
-.image-grid img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* Light white shadow */
-  transition: transform 0.2s;
-}
-
-.image-grid img:hover {
-  transform: scale(1.05); /* Scale up on hover */
+  overflow: hidden;
 }
 
 /* Overlay Text */
 .overlay-text {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
-  margin: 20px;
+  z-index: 10;
 }
 
 select#planetSelect {
-  font-size: 20px;
+  font-size: 16px;
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
@@ -46,4 +31,10 @@ select#planetSelect {
 
 select#planetSelect:focus {
   border: 2px solid #555;
+}
+
+/* Sphere container for Three.js */
+#sphere-container {
+  width: 100vw;
+  height: 100vh;
 }
