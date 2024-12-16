@@ -1,45 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
   const imageGrid = document.getElementById("imageGrid");
   const planetSelect = document.getElementById("planetSelect");
-  let loadedImages = 0; // 已加載的圖片數量
-  const imagesPerLoad = 20; // 每次加載圖片數量
 
-  // 假設有一個分類對應數據的 JSON 文件（需根據實際數據替換）
+  // Updated category-to-image mapping based on Excel file
   const imageCategories = {
-    Energetic: [1, 2, 3, 4, 5],
-    Lonely: [6, 7, 8],
-    Verdant: [9, 10],
-    Oceanic: [11, 12, 13],
-    // 添加其他分類
+    Energetic: [1, 13, 25, 37, 49],
+    Lonely: [2, 14, 26, 38, 50],
+    Verdant: [3, 15, 27, 39],
+    Oceanic: [4, 16, 28, 40],
+    Desolate: [5, 17, 29, 41],
+    Radiant: [6, 18, 30, 42],
+    Mysterious: [7, 19, 31, 43],
+    Arid: [8, 20, 32, 44],
+    Futuristic: [9, 21, 33, 45],
+    Azure: [10, 22, 34, 46],
+    Luminous: [11, 23, 35, 47],
+    Pulsating: [12, 24, 36, 48],
   };
-
+.
+  /**
+   * Load images based on the selected category
+   * @param {string} category - Selected category name
+   */
   function loadImages(category) {
-    console.log(`Loading images for category: ${category}`); // 調試訊息
+    console.log(`Loading images for category: ${category}`); // Debug message
 
-    // 清空現有圖片
+    // Clear existing images
     imageGrid.innerHTML = "";
 
-    // 確認該分類是否有數據
+    // Check if the category exists and has images
     if (!imageCategories[category] || imageCategories[category].length === 0) {
       console.log(`No images found for category: ${category}`);
-      imageGrid.innerHTML = "<p>No images found for this category.</p>"; // 提示沒有圖片
+      imageGrid.innerHTML = "<p>No images found for this category.</p>";
       return;
     }
 
-    // 遍歷分類中的圖片編號
+    // Loop through the images in the selected category
     imageCategories[category].forEach((imageIndex) => {
       const img = document.createElement("img");
-      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`; // 圖片路徑
+      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
       img.alt = `Image ${imageIndex}`;
-      img.onerror = () => console.error(`Failed to load image: ${img.src}`); // 圖片加載錯誤提示
+      img.onerror = () => console.error(`Failed to load image: ${img.src}`); // Error logging
       imageGrid.appendChild(img);
     });
   }
 
-  // 監聽選單的變化事件
+  // Listen for changes in the dropdown menu
   planetSelect.addEventListener("change", () => {
     const selectedCategory = planetSelect.value;
-    console.log(`Selected category: ${selectedCategory}`); // 調試訊息
-    loadImages(selectedCategory); // 加載對應分類圖片
+    console.log(`Selected category: ${selectedCategory}`); // Debug message
+    loadImages(selectedCategory); // Load images for the selected category
   });
+
+  // Default category to load on page load
+  const defaultCategory = Object.keys(imageCategories)[0]; // First category
+  if (defaultCategory) {
+    loadImages(defaultCategory);
+    planetSelect.value = defaultCategory; // Set the dropdown to the default category
+  }
 });
