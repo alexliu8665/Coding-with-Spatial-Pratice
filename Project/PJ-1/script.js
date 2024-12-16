@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const planetSelect = document.getElementById("planetSelect");
-  const sphereContainer = document.getElementById("sphere-container");
+  const container = document.getElementById("threeContainer");
 
-  // Category-to-image mapping
   const imageCategories = {
     Energetic: [1, 13, 25, 37, 49],
     Lonely: [2, 14, 26, 38, 50],
@@ -18,95 +17,60 @@ document.addEventListener("DOMContentLoaded", () => {
     Pulsating: [12, 24, 36, 48],
   };
 
-  let scene, camera, renderer, sphereGroup;
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement);
 
-  // Initialize Three.js
-  function initThreeJS() {
-    // Scene
-    scene = new THREE.Scene();
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 2;
 
-    // Camera
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 10;
+  const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
+  const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  scene.add(sphere);
 
-    // Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    sphereContainer.innerHTML = ""; // Clear previous canvas
-    sphereContainer.appendChild(renderer.domElement);
+  const textureLoader = new THREE.TextureLoader();
 
-    // Light
-    const light = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(light);
+  function loadCategory(category) {
+    const images = imageCategories[category] || [];
+    if (!images.length) return;
 
-    animate();
-  }
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    canvas.width = 1024;
+    canvas.height = 512;
 
-  // Create sphere of images
-  function createImageSphere(images) {
-    if (sphereGroup) {
-      scene.remove(sphereGroup); // Remove previous sphere
-    }
+    let loadedImages = 0;
+    images.forEach((imageIndex, idx) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
 
-    sphereGroup = new THREE.Group();
-    const radius = 1; // Sphere radius
-    const loader = new THREE.TextureLoader();
+      img.onload = () => {
+        const x = (idx % 2) * 512;
+        const y = Math.floor(idx / 2) * 256;
+        context.drawImage(img, x, y, 512, 256);
+        loadedImages++;
 
-    images.forEach((imageIndex, i) => {
-      const texture = loader.load(
-        `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`,
-        () => console.log(`Image loaded: ${imageIndex}`)
-      );
-
-      const material = new THREE.MeshBasicMaterial({ map: texture });
-      const geometry = new THREE.PlaneGeometry(2, 2); // Create flat image planes
-
-      const mesh = new THREE.Mesh(geometry, material);
-
-      // Arrange images on sphere surface
-      const phi = Math.acos(-1 + (2 * i) / images.length);
-      const theta = Math.sqrt(images.length * Math.PI) * phi;
-
-      mesh.position.x = radius * Math.sin(phi) * Math.cos(theta);
-      mesh.position.y = radius * Math.sin(phi) * Math.sin(theta);
-      mesh.position.z = radius * Math.cos(phi);
-
-      mesh.lookAt(scene.position); // Ensure images face the center
-      sphereGroup.add(mesh);
+        if (loadedImages === images.length) {
+          const texture = textureLoader.load(canvas.toDataURL());
+          sphereMaterial.map = texture;
+          sphereMaterial.needsUpdate = true;
+        }
+      };
     });
-
-    scene.add(sphereGroup);
   }
 
-  // Animate the scene
+  planetSelect.addEventListener("change", () => {
+    const category = planetSelect.value;
+    loadCategory(category);
+  });
+
   function animate() {
     requestAnimationFrame(animate);
-    if (sphereGroup) {
-      sphereGroup.rotation.y += 0.002; // Rotate sphere slowly
-    }
+    sphere.rotation.y += 0.002;
     renderer.render(scene, camera);
   }
-
-  // Dropdown event listener
-  planetSelect.addEventListener("change", () => {
-    const selectedCategory = planetSelect.value;
-    const images = imageCategories[selectedCategory];
-
-    if (images) {
-      console.log(`Loading images for category: ${selectedCategory}`);
-      createImageSphere(images); // Create sphere with images
-    }
-  });
-
-  // Window resize handling
-  window.addEventListener("resize", () => {
-    if (renderer && camera) {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-    }
-  });
-
-  // Initialize Three.js
-  initThreeJS();
+  animate();
 });

@@ -4,26 +4,12 @@ body {
   font-family: Arial, sans-serif;
   background-color: #000; /* Black background */
   color: #fff; /* White text */
+  overflow: hidden; /* Prevent scrolling */
 }
 
 /* Image Grid */
 .image-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Fixed 5 columns */
-  gap: 10px; /* Spacing between images */
-  padding: 20px;
-}
-
-.image-grid img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2); /* Light white shadow */
-  transition: transform 0.2s;
-}
-
-.image-grid img:hover {
-  transform: scale(1.05); /* Scale up on hover */
+  display: none; /* Hidden since we're rendering the sphere */
 }
 
 /* Overlay Text */
@@ -46,4 +32,13 @@ select#planetSelect {
 
 select#planetSelect:focus {
   border: 2px solid #555;
+}
+
+/* Three.js Container */
+#threeContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 }
