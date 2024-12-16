@@ -1,52 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
   const imageGrid = document.getElementById("imageGrid");
   const planetSelect = document.getElementById("planetSelect");
-  const filterLabel = document.getElementById("filterLabel");
+  let loadedImages = 0; // Track the number of loaded images
+  const imagesPerLoad = 20; // Number of images to load per batch
+  const totalImages = 50; // Total number of images available
 
-  let loadedImages = 0;
-  const imagesPerLoad = 20;
+  // Function to load images
+  function loadImages() {
+    const maxImagesToLoad = Math.min(totalImages - loadedImages, imagesPerLoad);
+    for (let i = 0; i < maxImagesToLoad; i++) {
+      const img = document.createElement("img");
+      const imageIndex = loadedImages + i + 1; // Image index starts at 1
+      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
+      img.alt = `Image ${imageIndex}`;
+      img.loading = "lazy"; // Enable lazy loading
+      imageGrid.appendChild(img);
+    }
+    loadedImages += maxImagesToLoad;
 
-  // Fetch image mapping from JSON
-  fetch('image_mapping.json')
-    .then(response => response.json())
-    .then(data => {
-      const imageCategories = {};
+    // Remove scroll event listener if all images are loaded
+    if (loadedImages >= totalImages) {
+      window.removeEventListener("scroll", handleScroll);
+    }
+  }
 
-      // Convert JSON data into category mapping
-      data.forEach(item => {
-        if (!imageCategories[item.Category]) {
-          imageCategories[item.Category] = [];
-        }
-        imageCategories[item.Category].push(item['Image Number']);
-      });
+  // Function to detect scroll position and load more images
+  function handleScroll() {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.body.offsetHeight - 100;
 
-      let selectedCategory = ""; // Currently selected category
+    if (scrollPosition >= threshold) {
+      loadImages();
+    }
+  }
 
-      function loadImages() {
-        const imagesToLoad = selectedCategory
-          ? imageCategories[selectedCategory].slice(loadedImages, loadedImages + imagesPerLoad)
-          : Array.from({ length: imagesPerLoad }, (_, i) => loadedImages + i + 1);
+  // Event listener for dropdown to refresh images
+  planetSelect.addEventListener("change", () => {
+    loadedImages = 0; // Reset loaded images count
+    imageGrid.innerHTML = ""; // Clear the current images
+    loadImages(); // Reload images
+  });
 
-        imagesToLoad.forEach(imageIndex => {
-          const img = document.createElement("img");
-          img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
-          img.alt = `Image ${imageIndex}`;
-          img.loading = "lazy";
-          imageGrid.appendChild(img);
-        });
-
-        loadedImages += imagesToLoad.length;
-      }
-
-      planetSelect.addEventListener("change", () => {
-        selectedCategory = planetSelect.value;
-        loadedImages = 0;
-        imageGrid.innerHTML = ""; // Clear current images
-        filterLabel.textContent = selectedCategory ? `Current Filter: ${selectedCategory}` : "All Images";
-        loadImages();
-      });
-
-      loadImages(); // Initial load
-    })
-    .catch(err => console.error('Error loading image mapping:', err));
+  // Initial load
+  loadImages();
+  window.addEventListener("scroll", handleScroll);
 });

@@ -9,7 +9,7 @@ body {
 /* Image Grid */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive columns */
+  grid-template-columns: repeat(5, 1fr); /* Fixed 5 columns */
   gap: 10px; /* Spacing between images */
   padding: 20px;
 }
@@ -24,15 +24,6 @@ body {
 
 .image-grid img:hover {
   transform: scale(1.05); /* Scale up on hover */
-}
-
-/* Filter Label */
-.filter-label {
-  text-align: center;
-  margin: 10px 0;
-  font-size: 18px;
-  color: #fff;
-  font-weight: bold;
 }
 
 /* Overlay Text */
