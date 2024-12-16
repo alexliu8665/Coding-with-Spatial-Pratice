@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const imageGrid = document.getElementById("imageGrid");
   const planetSelect = document.getElementById("planetSelect");
   let loadedImages = 0; // Track the number of loaded images
-  const imagesPerLoad = 20; // Number of images to load per batch
+  const imagesPerLoad = 50; // Number of images to load per batch
   const totalImages = 50; // Total number of images available
 
   // Function to load images
