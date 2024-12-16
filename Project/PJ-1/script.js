@@ -100,9 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Window resize handling
   window.addEventListener("resize", () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    if (renderer && camera) {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    }
   });
 
   // Initialize Three.js
