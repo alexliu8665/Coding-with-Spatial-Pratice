@@ -26,10 +26,20 @@ body {
   transform: scale(1.05); /* Scale up on hover */
 }
 
-/* Overlay Text */
+/* Overlay Text - Centered with Background */
 .overlay-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.6); /* Black background with 60% opacity */
+  color: #fff; /* White text */
+  padding: 20px 40px;
+  border-radius: 8px;
   text-align: center;
-  margin: 20px;
+  font-size: 18px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 select#planetSelect {
