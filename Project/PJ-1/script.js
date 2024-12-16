@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event listener for dropdown to refresh images
   planetSelect.addEventListener("change", () => {
-    loadedImages = 0; // Reset loaded images count
+    loadedImages = 5; // Reset loaded images count
     imageGrid.innerHTML = ""; // Clear the current images
     loadImages(); // Reload images
   });
