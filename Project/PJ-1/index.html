@@ -3,32 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A World Reimagined</title>
+  <title>Planet Selector with Three.js</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <main>
-    <div class="overlay-text">
-      <span><strong>I would love to live on the planet that is </strong></span>
-      <select id="planetSelect">
-        <option value="" disabled selected>Choose...</option>
-        <option value="Energetic">Energetic</option>
-        <option value="Lonely">Lonely</option>
-        <option value="Verdant">Verdant</option>
-        <option value="Oceanic">Oceanic</option>
-        <option value="Desolate">Desolate</option>
-        <option value="Radiant">Radiant</option>
-        <option value="Mysterious">Mysterious</option>
-        <option value="Arid">Arid</option>
-        <option value="Futuristic">Futuristic</option>
-        <option value="Azure">Azure</option>
-        <option value="Luminous">Luminous</option>
-        <option value="Pulsating">Pulsating</option>
-      </select>
-    </div>
-    <div id="threeContainer"></div>
-  </main>
+  <!-- Overlay for Dropdown Menu -->
+  <div class="overlay-text">
+    <span><strong>I would love to live on the planet that is </strong></span>
+    <select id="planetSelect">
+      <option value="" disabled selected>Choose...</option>
+      <option value="Energetic">Energetic</option>
+      <option value="Lonely">Lonely</option>
+      <option value="Verdant">Verdant</option>
+      <option value="Oceanic">Oceanic</option>
+      <option value="Desolate">Desolate</option>
+      <option value="Radiant">Radiant</option>
+      <option value="Mysterious">Mysterious</option>
+      <option value="Arid">Arid</option>
+      <option value="Futuristic">Futuristic</option>
+      <option value="Azure">Azure</option>
+      <option value="Luminous">Luminous</option>
+      <option value="Pulsating">Pulsating</option>
+    </select>
+  </div>
+
+  <!-- Three.js Canvas -->
+  <div id="scene-container"></div>
+
   <script src="script.js"></script>
 </body>
 </html>

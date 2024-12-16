@@ -1,76 +1,83 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const sceneContainer = document.getElementById("scene-container");
   const planetSelect = document.getElementById("planetSelect");
-  const container = document.getElementById("threeContainer");
 
-  const imageCategories = {
-    Energetic: [1, 13, 25, 37, 49],
-    Lonely: [2, 14, 26, 38, 50],
-    Verdant: [3, 15, 27, 39],
-    Oceanic: [4, 16, 28, 40],
-    Desolate: [5, 17, 29, 41],
-    Radiant: [6, 18, 30, 42],
-    Mysterious: [7, 19, 31, 43],
-    Arid: [8, 20, 32, 44],
-    Futuristic: [9, 21, 33, 45],
-    Azure: [10, 22, 34, 46],
-    Luminous: [11, 23, 35, 47],
-    Pulsating: [12, 24, 36, 48],
-  };
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  container.appendChild(renderer.domElement);
-
+  // Set up Three.js scene
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 2;
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  sceneContainer.appendChild(renderer.domElement);
 
-  const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
-  const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  scene.add(sphere);
+  // Create sphere geometry for image mapping
+  const sphereGeometry = new THREE.SphereGeometry(5, 64, 64); // A smooth sphere
+  const sphereMaterials = [];
 
+  // Preload textures for all categories
   const textureLoader = new THREE.TextureLoader();
+  const imageCategories = {
+    Energetic: 'https://via.placeholder.com/512/ff0000',
+    Lonely: 'https://via.placeholder.com/512/0000ff',
+    Verdant: 'https://via.placeholder.com/512/00ff00',
+    Oceanic: 'https://via.placeholder.com/512/00ffff',
+    Desolate: 'https://via.placeholder.com/512/aaaaaa',
+    Radiant: 'https://via.placeholder.com/512/ffff00',
+    Mysterious: 'https://via.placeholder.com/512/5500ff',
+    Arid: 'https://via.placeholder.com/512/ffaa00',
+    Futuristic: 'https://via.placeholder.com/512/333333',
+    Azure: 'https://via.placeholder.com/512/00aaff',
+    Luminous: 'https://via.placeholder.com/512/ffffff',
+    Pulsating: 'https://via.placeholder.com/512/ff00ff',
+  };
 
-  function loadCategory(category) {
-    const images = imageCategories[category] || [];
-    if (!images.length) return;
+  let currentSphere;
 
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    canvas.width = 1024;
-    canvas.height = 512;
+  function loadSphereTexture(category) {
+    if (currentSphere) {
+      scene.remove(currentSphere); // Remove old sphere
+    }
 
-    let loadedImages = 0;
-    images.forEach((imageIndex, idx) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = `https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/Images/${imageIndex}.JPG`;
+    const texture = textureLoader.load(
+      imageCategories[category],
+      () => console.log(`Loaded texture for ${category}`),
+      undefined,
+      (err) => console.error('Error loading texture:', err)
+    );
 
-      img.onload = () => {
-        const x = (idx % 2) * 512;
-        const y = Math.floor(idx / 2) * 256;
-        context.drawImage(img, x, y, 512, 256);
-        loadedImages++;
-
-        if (loadedImages === images.length) {
-          const texture = textureLoader.load(canvas.toDataURL());
-          sphereMaterial.map = texture;
-          sphereMaterial.needsUpdate = true;
-        }
-      };
-    });
+    const material = new THREE.MeshBasicMaterial({ map: texture, wireframe: false });
+    currentSphere = new THREE.Mesh(sphereGeometry, material);
+    scene.add(currentSphere);
   }
 
-  planetSelect.addEventListener("change", () => {
-    const category = planetSelect.value;
-    loadCategory(category);
-  });
+  // Camera position
+  camera.position.z = 10;
 
+  // Render loop
   function animate() {
     requestAnimationFrame(animate);
-    sphere.rotation.y += 0.002;
+    if (currentSphere) {
+      currentSphere.rotation.y += 0.005; // Rotate sphere
+    }
     renderer.render(scene, camera);
   }
+
   animate();
+
+  // Handle dropdown change
+  planetSelect.addEventListener("change", () => {
+    const selectedCategory = planetSelect.value;
+    if (imageCategories[selectedCategory]) {
+      loadSphereTexture(selectedCategory);
+    }
+  });
+
+  // Load default sphere
+  loadSphereTexture("Energetic");
+
+  // Handle window resize
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 });
