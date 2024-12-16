@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Luminous: [11, 23, 35, 47],
     Pulsating: [12, 24, 36, 48],
   };
-.
+
   /**
    * Load images based on the selected category
    * @param {string} category - Selected category name
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Default category to load on page load
   const defaultCategory = Object.keys(imageCategories)[0]; // First category
   if (defaultCategory) {
+    console.log(`Default category: ${defaultCategory}`); // Debug message
     loadImages(defaultCategory);
     planetSelect.value = defaultCategory; // Set the dropdown to the default category
   }
