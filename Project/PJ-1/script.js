@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
 
     if (currentSphere) {
-      currentSphere.rotation.y += 0.005; // 球體旋轉速度
+      currentSphere.rotation.y += 0.01; // 球體旋轉速度
 
       // 檢測是否旋轉一整圈
       rotationCounter += 0.01;
