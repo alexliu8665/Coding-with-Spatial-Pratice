@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const texture = textureLoader.load(`./Images/${imageCategories[category][0]}`);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const sphere = new THREE.Mesh(sphereGeometry, material);
-    sphere.position.set((Math.random() - 0.5) * 60, (Math.random() - 0.5) * 30, (Math.random() - 0.5) * 60);
+    sphere.position.set((Math.random() - 0.5) * 50, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 50);
     scene.add(sphere);
     spheres.push({ sphere, category, images: imageCategories[category], imageIndex: 0 });
   });
