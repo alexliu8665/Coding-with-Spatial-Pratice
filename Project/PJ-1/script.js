@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sphereContainer = document.getElementById("sphereContainer");
   const planetSelect = document.getElementById("planetSelect");
 
-  // Three.js 設置
+  // Three.js 基本設置
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   for (let i = 0; i < 5000; i++) {
     positions.push((Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000);
   }
-  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  starsGeometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
   const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
   const stars = new THREE.Points(starsGeometry, starsMaterial);
   scene.add(stars);
@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const spheres = [];
   let selectedSphere = null; // 被選中的球體
   let selectedSphereRotationProgress = 0; // 選中球體的累計旋轉角度
+  let selectedSphereAngle = 0; // 選中球體的軌跡角度
 
   // 初始化球體
   Object.keys(imageCategories).forEach((category) => {
@@ -47,9 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 隨機分布位置
     sphere.position.set(
-      (Math.random() - 0.5) * 30,
-      (Math.random() - 0.5) * 15,
-      (Math.random() - 0.5) * 30
+      (Math.random() - 0.5) * 40,
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 40
     );
 
     scene.add(sphere);
@@ -58,11 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
       category,
       images: imageCategories[category],
       imageIndex: 0,
-      speed: { x: 0, y: 0, z: 0 },
+      originalScale: 1, // 原始縮放大小
     });
   });
 
-  camera.position.z = 30;
+  camera.position.z = 50;
 
   // 更新球體圖片
   function updateSphereImage(data) {
@@ -79,21 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
     spheres.forEach((data) => {
       if (data.category === selectedCategory) {
         selectedSphere = data; // 設定選中的球體
-        selectedSphereRotationProgress = 0; // 重置選中球體的旋轉進度
+        selectedSphereRotationProgress = 0; // 重置旋轉進度
+        selectedSphereAngle = 0; // 軌跡角度重置
 
         // 放大球體
         data.sphere.scale.set(3, 3, 3);
-
-        // 設定隨機移動速度
-        data.speed = {
-          x: (Math.random() - 0.5) * 0.05,
-          y: (Math.random() - 0.5) * 0.05,
-          z: (Math.random() - 0.5) * 0.05,
-        };
       } else {
-        // 恢復其他球體大小和靜止
-        data.sphere.scale.set(1, 1, 1);
-        data.speed = { x: 0, y: 0, z: 0 };
+        // 恢復其他球體大小
+        data.sphere.scale.set(data.originalScale, data.originalScale, data.originalScale);
       }
     });
   });
@@ -102,21 +96,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function animate() {
     requestAnimationFrame(animate);
 
-    stars.rotation.y += 0.0005; // 星空背景緩慢旋轉
+    // 星空背景旋轉
+    stars.rotation.y += 0.0005;
 
     spheres.forEach((data) => {
       data.sphere.rotation.y += 0.01; // 球體自轉
 
       if (data === selectedSphere) {
-        // 選中球體移動
-        data.sphere.position.x += data.speed.x;
-        data.sphere.position.y += data.speed.y;
-        data.sphere.position.z += data.speed.z;
-
-        // 邊界反彈效果
-        if (Math.abs(data.sphere.position.x) > 30) data.speed.x *= -1;
-        if (Math.abs(data.sphere.position.y) > 15) data.speed.y *= -1;
-        if (Math.abs(data.sphere.position.z) > 30) data.speed.z *= -1;
+        // 移動選中球體，使其沿著星空背景的軌跡旋轉
+        selectedSphereAngle += 0.002; // 軌跡角度增量
+        const radius = 20; // 運行半徑
+        data.sphere.position.x = Math.sin(selectedSphereAngle) * radius;
+        data.sphere.position.z = Math.cos(selectedSphereAngle) * radius;
 
         // 計算旋轉進度並檢查是否轉滿一圈
         selectedSphereRotationProgress += 0.01;
