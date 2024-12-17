@@ -66,10 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
 
     if (currentSphere) {
-      currentSphere.rotation.y += 0.01; // 球體旋轉速度
+      currentSphere.rotation.y += 0.004; // 球體旋轉速度
 
       // 檢測是否旋轉一整圈
-      rotationCounter += 0.01;
+      rotationCounter += 0.004;
       if (rotationCounter >= 2 * Math.PI) {
         rotationCounter = 0; // 重置旋轉計數
         loadNextImage(); // 加載下一張圖片
