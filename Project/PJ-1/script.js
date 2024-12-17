@@ -28,18 +28,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const sphereData = [];
   const categories = Object.keys(imageCategories);
 
-  // 初始化球體
+  // 初始化球體（隨機分布和大小）
   categories.forEach((category, index) => {
-    const texture = textureLoader.load(`./Images/${imageCategories[category][0]}`,
-      () => console.log(`Loaded texture: ${imageCategories[category][0]}`),
-      undefined,
-      (err) => console.error(`Error loading image: ${imageCategories[category][0]}`, err)
-    );
+    const randomSize = Math.random() * 1 + 0.5; // 隨機大小 (0.5 - 1.5)
+    const texture = textureLoader.load(`./Images/${imageCategories[category][0]}?t=${Date.now()}`);
     const material = new THREE.MeshBasicMaterial({ map: texture });
 
-    const sphere = new THREE.Mesh(sphereGeometry, material);
-    sphere.position.x = Math.sin((index / categories.length) * Math.PI * 2) * 6;
-    sphere.position.z = Math.cos((index / categories.length) * Math.PI * 2) * 6;
+    const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
+
+    // 隨機位置
+    sphere.position.x = (Math.random() - 0.5) * 10; // -5 到 5
+    sphere.position.y = (Math.random() - 0.5) * 5;  // -2.5 到 2.5
+    sphere.position.z = (Math.random() - 0.5) * 10;
 
     scene.add(sphere);
     spheres.push(sphere);
@@ -48,12 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
       category,
       rotationProgress: 0, // 累積旋轉角度
       currentImageIndex: 0, // 當前圖片索引
+      originalScale: randomSize, // 初始大小
     });
   });
 
   camera.position.z = 15;
 
-  // 更新圖片
+  // 更新球體圖片
   function updateSphereImage(sphere, sphereInfo) {
     sphereInfo.currentImageIndex =
       (sphereInfo.currentImageIndex + 1) % imageCategories[sphereInfo.category].length;
@@ -61,9 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const newTexture = textureLoader.load(imagePath, () => {
       sphere.material.map = newTexture;
       sphere.material.needsUpdate = true;
-      console.log(`Image updated: ${imagePath}`);
-    }, undefined, (err) => {
-      console.error(`Failed to load image: ${imagePath}`, err);
     });
   }
 
@@ -74,10 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
     sphereData.forEach((data, index) => {
       const sphere = spheres[index];
       if (data.category === selectedCategory) {
-        sphere.scale.set(1.5, 1.5, 1.5); // 放大
+        sphere.scale.set(data.originalScale * 1.5, data.originalScale * 1.5, data.originalScale * 1.5); // 放大
         data.rotationProgress = 0; // 重置旋轉進度
       } else {
-        sphere.scale.set(1, 1, 1); // 恢復原大小
+        sphere.scale.set(data.originalScale, data.originalScale, data.originalScale); // 恢復原大小
       }
     });
   });
