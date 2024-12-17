@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 隨機分布位置
     sphere.position.set(
-      (Math.random() - 0.5) * 40,
-      (Math.random() - 0.5) * 20,
-      (Math.random() - 0.5) * 40
+      (Math.random() - 0.5) * 50,
+      (Math.random() - 0.5) * 30,
+      (Math.random() - 0.5) * 50
     );
 
     scene.add(sphere);
