@@ -1,14 +1,16 @@
+/* 全局樣式 */
 body, html {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #000;
-  color: #fff;
+  background-color: #000; /* 背景顏色設為黑色 */
+  color: #fff; /* 字體顏色設為白色 */
   font-family: Arial, sans-serif;
   height: 100%;
-  cursor: url('astronaut.png') 80 80, auto; /* 調整焦點到圖片中心 */
+  cursor: url('astronaut.png') 80 80, auto; /* 太空人鼠標 */
 }
 
+/* Three.js 容器 */
 #sphereContainer {
   position: absolute;
   top: 0;
@@ -17,23 +19,51 @@ body, html {
   height: 100%;
 }
 
+/* 選單樣式 */
 .overlay-text {
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 10;
-  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10; /* 保持在頂層 */
+  background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
   padding: 10px 15px;
   border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.3); /* 白色陰影效果 */
 }
 
+/* 下拉選單樣式 */
 select#planetSelect {
   font-size: 18px;
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
-  background-color: #fff;
-  color: #000;
+  background-color: #fff; /* 下拉選單背景 */
+  color: #000; /* 下拉選單文字顏色 */
   font-weight: bold;
   outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* 輕微陰影 */
+}
+
+/* 下拉選單懸浮效果 */
+select#planetSelect:hover {
+  background-color: #f0f0f0; /* 懸浮時變淺灰 */
+}
+
+/* 選單選中樣式 */
+select#planetSelect:focus {
+  border: 2px solid #0078ff; /* 聚焦時邊框顏色 */
+}
+
+/* 球體 Three.js 容器 */
+#sphereContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 太空人鼠標大小調整 - 確保正確焦點 */
+body {
+  cursor: url('astronaut.png') 80 80, auto; /* 鼠標焦點設置為 (80, 80) */
 }

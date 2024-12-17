@@ -40,9 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
 
     // 隨機位置
-    sphere.position.x = (Math.random() - 0.5) * 50;
-    sphere.position.y = (Math.random() - 0.5) * 30;
-    sphere.position.z = (Math.random() - 0.5) * 50;
+    sphere.position.x = (Math.random() - 0.5) * 30;
+    sphere.position.y = (Math.random() - 0.5) * 15;
+    sphere.position.z = (Math.random() - 0.5) * 30;
 
     scene.add(sphere);
     spheres.push(sphere);
