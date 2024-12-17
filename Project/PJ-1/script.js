@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
     Verdant: ["8.JPG", "21.JPG"],
   };
 
-  // 初始化球體
   const spheres = [];
   const sphereData = [];
-  let categories = Object.keys(imageCategories);
+  const categories = Object.keys(imageCategories);
 
+  // 初始化球體
   categories.forEach((category, index) => {
     const texture = textureLoader.load(`./Images/${imageCategories[category][0]}`);
     const material = new THREE.MeshBasicMaterial({ map: texture });
@@ -42,33 +42,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sphereData.push({
       category,
-      rotationProgress: 0, // 旋轉進度
+      rotationProgress: 0, // 累積旋轉角度
       currentImageIndex: 0, // 當前圖片索引
     });
   });
 
   camera.position.z = 15;
 
-  // 切換圖片
+  // 更新圖片
   function updateSphereImage(sphere, sphereInfo) {
     sphereInfo.currentImageIndex =
       (sphereInfo.currentImageIndex + 1) % imageCategories[sphereInfo.category].length;
     const imagePath = `./Images/${imageCategories[sphereInfo.category][sphereInfo.currentImageIndex]}`;
-    const newTexture = textureLoader.load(imagePath);
-    sphere.material.map = newTexture;
-    sphere.material.needsUpdate = true;
+    const newTexture = textureLoader.load(imagePath, () => {
+      sphere.material.map = newTexture;
+      sphere.material.needsUpdate = true;
+    });
   }
 
-  // 監聽清單變化
+  // 監聽選單變化
   planetSelect.addEventListener("change", () => {
     const selectedCategory = planetSelect.value;
 
     sphereData.forEach((data, index) => {
       const sphere = spheres[index];
-
       if (data.category === selectedCategory) {
         sphere.scale.set(1.5, 1.5, 1.5); // 放大
-        sphere.rotation.y = 0; // 反向旋轉
+        data.rotationProgress = 0; // 重置旋轉進度
       } else {
         sphere.scale.set(1, 1, 1); // 恢復原大小
       }
@@ -81,10 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     spheres.forEach((sphere, index) => {
       const sphereInfo = sphereData[index];
-      sphere.rotation.y += 0.01; // 每個球體自轉
 
-      // 檢測是否轉完一圈
+      sphere.rotation.y += 0.01; // 球體自轉
       sphereInfo.rotationProgress += 0.01;
+
+      // 如果旋轉累積進度 >= 2 * Math.PI，則切換到下一張圖片
       if (sphereInfo.rotationProgress >= 2 * Math.PI) {
         sphereInfo.rotationProgress = 0; // 重置進度
         updateSphereImage(sphere, sphereInfo); // 更新圖片
