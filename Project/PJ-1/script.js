@@ -53,9 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 隨機分布位置
     sphere.position.set(
-      (Math.random() - 0.5) * 100, // X軸範圍 -50 到 50
-      (Math.random() - 0.5) * 50,  // Y軸範圍 -25 到 25
-      (Math.random() - 0.5) * 100  // Z軸範圍 -50 到 50
+      (Math.random() - 0.5) * 100, // X軸範圍
+      (Math.random() - 0.5) * 50,  // Y軸範圍
+      (Math.random() - 0.5) * 100  // Z軸範圍
     );
 
     scene.add(sphere);
@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  camera.position.z = 100; // 拉遠視角增加深度效果
 
   // 更新球體圖片
   function updateSphereImage(data) {
