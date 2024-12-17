@@ -37,9 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
 
     // 隨機位置
-    sphere.position.x = (Math.random() - 0.5) * 10; // -5 到 5
-    sphere.position.y = (Math.random() - 0.5) * 5;  // -2.5 到 2.5
-    sphere.position.z = (Math.random() - 0.5) * 10;
+    sphere.position.x = (Math.random() - 0.5) * 20; // -5 到 5
+    sphere.position.y = (Math.random() - 0.5) * 25;  // -2.5 到 2.5
+    sphere.position.z = (Math.random() - 0.5) * 30;
 
     scene.add(sphere);
     spheres.push(sphere);
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sphereData.forEach((data, index) => {
       const sphere = spheres[index];
       if (data.category === selectedCategory) {
-        sphere.scale.set(data.originalScale * 1.5, data.originalScale * 1.5, data.originalScale * 1.5); // 放大
+        sphere.scale.set(data.originalScale * 5, data.originalScale * 5, data.originalScale * 5); // 放大
         data.rotationProgress = 0; // 重置旋轉進度
       } else {
         sphere.scale.set(data.originalScale, data.originalScale, data.originalScale); // 恢復原大小
