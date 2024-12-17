@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         data.speed.z = (Math.random() - 0.5) * 0.05;
 
         // 放大球體
-        sphere.scale.set(data.originalScale * 5, data.originalScale * 5, data.originalScale * 5);
+        sphere.scale.set(data.originalScale * 2, data.originalScale * 2, data.originalScale * 2);
         data.rotationProgress = 0;
       } else {
         // 停止其他球體的移動，並恢復原始大小
