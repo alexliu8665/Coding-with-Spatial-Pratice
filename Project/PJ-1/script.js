@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const sceneContainer = document.getElementById("sphereContainer");
-  
+  const planetSelect = document.getElementById("planetSelect");
+
   // Three.js 設置
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   sceneContainer.appendChild(renderer.domElement);
 
   const textureLoader = new THREE.TextureLoader();
-  const sphereGeometry = new THREE.SphereGeometry(1.5, 64, 64); // 調整球體大小
+  const sphereGeometry = new THREE.SphereGeometry(1.5, 64, 64); // 預設球體大小
 
   // 定義圖片分類與對應圖片列表
   const imageCategories = {
@@ -36,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { x: 0, y: 4, z: 6 },
   ];
 
+  let selectedSphere = null; // 當前被選中的球體
+
   // 創建球體
   function createSpheres() {
     let index = 0;
@@ -49,7 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 設置球體位置
       sphere.position.set(positions[index].x, positions[index].y, positions[index].z);
-      sphere.userData = { rotationSpeed: 0.005 + Math.random() * 0.005 }; // 設置每個球體不同的旋轉速度
+      sphere.userData = {
+        category: category,
+        rotationSpeed: 0.005 + Math.random() * 0.005, // 每個球體隨機旋轉速度
+        originalSize: 1.5,
+        isReverse: false, // 是否反方向旋轉
+      };
+
       spheres.push(sphere);
       scene.add(sphere);
 
@@ -62,13 +71,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   camera.position.z = 15;
 
+  // 監聽選單切換分類
+  planetSelect.addEventListener("change", () => {
+    const selectedCategory = planetSelect.value;
+
+    // 重置所有球體
+    spheres.forEach((sphere) => {
+      sphere.scale.set(1, 1, 1); // 恢復原始大小
+      sphere.userData.isReverse = false; // 恢復正常旋轉
+    });
+
+    // 尋找對應的球體並設置效果
+    selectedSphere = spheres.find(sphere => sphere.userData.category === selectedCategory);
+
+    if (selectedSphere) {
+      selectedSphere.userData.isReverse = true; // 設置反方向旋轉
+      selectedSphere.scale.set(2.25, 2.25, 2.25); // 放大 1.5 倍
+    }
+  });
+
   // 動畫循環
   function animate() {
     requestAnimationFrame(animate);
 
-    // 讓每個球體旋轉
     spheres.forEach((sphere) => {
-      sphere.rotation.y += sphere.userData.rotationSpeed;
+      if (sphere.userData.isReverse) {
+        sphere.rotation.y -= sphere.userData.rotationSpeed; // 反方向旋轉
+      } else {
+        sphere.rotation.y += sphere.userData.rotationSpeed; // 正常旋轉
+      }
     });
 
     renderer.render(scene, camera);
