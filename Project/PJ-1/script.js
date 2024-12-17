@@ -30,7 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 初始化球體
   categories.forEach((category, index) => {
-    const texture = textureLoader.load(`./Images/${imageCategories[category][0]}`);
+    const texture = textureLoader.load(`./Images/${imageCategories[category][0]}`,
+      () => console.log(`Loaded texture: ${imageCategories[category][0]}`),
+      undefined,
+      (err) => console.error(`Error loading image: ${imageCategories[category][0]}`, err)
+    );
     const material = new THREE.MeshBasicMaterial({ map: texture });
 
     const sphere = new THREE.Mesh(sphereGeometry, material);
@@ -53,10 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateSphereImage(sphere, sphereInfo) {
     sphereInfo.currentImageIndex =
       (sphereInfo.currentImageIndex + 1) % imageCategories[sphereInfo.category].length;
-    const imagePath = `./Images/${imageCategories[sphereInfo.category][sphereInfo.currentImageIndex]}`;
+    const imagePath = `./Images/${imageCategories[sphereInfo.category][sphereInfo.currentImageIndex]}?t=${Date.now()}`;
     const newTexture = textureLoader.load(imagePath, () => {
       sphere.material.map = newTexture;
       sphere.material.needsUpdate = true;
+      console.log(`Image updated: ${imagePath}`);
+    }, undefined, (err) => {
+      console.error(`Failed to load image: ${imagePath}`, err);
     });
   }
 
