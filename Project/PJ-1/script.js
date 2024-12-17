@@ -68,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  camera.position.z = 100; // 拉遠視角增加深度效果
 
   // 更新球體圖片
   function updateSphereImage(data) {
