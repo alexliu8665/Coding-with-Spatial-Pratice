@@ -2,79 +2,81 @@ document.addEventListener("DOMContentLoaded", () => {
   const sceneContainer = document.getElementById("scene-container");
   const planetSelect = document.getElementById("planetSelect");
 
-  // Three.js 基本設置
+  // Three.js 設置
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   sceneContainer.appendChild(renderer.domElement);
 
-  let currentSphere;
   const textureLoader = new THREE.TextureLoader();
   const sphereGeometry = new THREE.SphereGeometry(5, 64, 64);
+  let currentSphere;
 
-  // 圖片分類數據
+  // 圖片分類與對應圖片列表
   const imageCategories = {
-    Energetic: [1, 13, 25, 37, 49],
-    Lonely: [2, 14, 26, 38, 50],
-    Verdant: [3, 15, 27, 39],
-    Oceanic: [4, 16, 28, 40],
-    Desolate: [5, 17, 29, 41],
-    Radiant: [6, 18, 30, 42],
-    Mysterious: [7, 19, 31, 43],
-    Arid: [8, 20, 32, 44],
-    Futuristic: [9, 21, 33, 45],
-    Azure: [10, 22, 34, 46],
-    Luminous: [11, 23, 35, 47],
-    Pulsating: [12, 24, 36, 48],
+    Energetic: ["1.JPG", "13.JPG", "25.JPG", "37.JPG", "49.JPG"],
+    Lonely: ["2.JPG", "14.JPG", "26.JPG", "38.JPG", "50.JPG"],
+    Verdant: ["3.JPG", "15.JPG", "27.JPG", "39.JPG"],
+    Oceanic: ["4.JPG", "16.JPG", "28.JPG", "40.JPG"],
   };
 
-  // 加載球體貼圖
-  function loadSphereTexture(category) {
-    if (currentSphere) scene.remove(currentSphere); // 清除當前球體
+  let currentCategory = "Energetic"; // 預設分類
+  let currentImageIndex = 0; // 當前圖片索引
+  let rotationCounter = 0; // 累積旋轉計數
 
-    const imageIndex = imageCategories[category]?.[0]; // 使用該分類的第一張圖片
-    if (!imageIndex) {
-      console.error(`Category "${category}" has no images.`);
-      return;
-    }
+  // 創建球體
+  function createSphere(texturePath) {
+    if (currentSphere) scene.remove(currentSphere);
 
-    const texturePath = `./Images/${imageIndex}.JPG`;
-    console.log(`Loading texture: ${texturePath}`);
-
-    const texture = textureLoader.load(
-      texturePath,
-      () => console.log("Texture loaded successfully."),
-      undefined,
-      () => {
-        console.error(`Failed to load texture: ${texturePath}`);
-        alert("圖片加載失敗，請檢查路徑是否正確！");
-      }
-    );
-
+    const texture = textureLoader.load(texturePath);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     currentSphere = new THREE.Mesh(sphereGeometry, material);
     scene.add(currentSphere);
   }
 
-  // 初始球體設置
+  // 加載下一張圖片
+  function loadNextImage() {
+    const images = imageCategories[currentCategory];
+    if (!images || images.length === 0) return;
+
+    currentImageIndex = (currentImageIndex + 1) % images.length; // 循環切換圖片
+    const imagePath = `./Images/${images[currentImageIndex]}`;
+    console.log(`Loading image: ${imagePath}`);
+    createSphere(imagePath);
+  }
+
+  // 初始化球體
+  loadNextImage();
+
+  // 監聽選單切換分類
+  planetSelect.addEventListener("change", () => {
+    currentCategory = planetSelect.value;
+    currentImageIndex = -1; // 重置索引
+    loadNextImage();
+  });
+
   camera.position.z = 10;
 
   function animate() {
     requestAnimationFrame(animate);
-    if (currentSphere) currentSphere.rotation.y += 0.005; // 球體旋轉
+
+    if (currentSphere) {
+      currentSphere.rotation.y += 0.01; // 球體旋轉速度
+
+      // 檢測是否旋轉一整圈
+      rotationCounter += 0.01;
+      if (rotationCounter >= 2 * Math.PI) {
+        rotationCounter = 0; // 重置旋轉計數
+        loadNextImage(); // 加載下一張圖片
+      }
+    }
+
     renderer.render(scene, camera);
   }
   animate();
 
-  planetSelect.addEventListener("change", () => {
-    const selectedCategory = planetSelect.value;
-    loadSphereTexture(selectedCategory);
-  });
-
-  // 載入預設分類
-  loadSphereTexture("Energetic");
-
+  // 自適應窗口大小
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();

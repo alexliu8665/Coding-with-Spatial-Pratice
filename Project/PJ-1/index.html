@@ -3,29 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A World Reimagined</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+  <title>Dynamic Sphere Images</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 5px;
+    }
+  </style>
 </head>
 <body>
-  <div id="scene-container"></div>
-  <div class="overlay-text">
-    <label for="planetSelect"><strong>Select a Planet:</strong></label>
+  <div id="overlay">
+    <label for="planetSelect">Select a Category:</label>
     <select id="planetSelect">
-      <option value="Energetic" selected>Energetic</option>
+      <option value="Energetic">Energetic</option>
       <option value="Lonely">Lonely</option>
       <option value="Verdant">Verdant</option>
       <option value="Oceanic">Oceanic</option>
-      <option value="Desolate">Desolate</option>
-      <option value="Radiant">Radiant</option>
-      <option value="Mysterious">Mysterious</option>
-      <option value="Arid">Arid</option>
-      <option value="Futuristic">Futuristic</option>
-      <option value="Azure">Azure</option>
-      <option value="Luminous">Luminous</option>
-      <option value="Pulsating">Pulsating</option>
     </select>
   </div>
+  <div id="scene-container"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
