@@ -7,7 +7,7 @@ body, html {
   color: #fff; /* 字體顏色設為白色 */
   font-family: Arial, sans-serif;
   height: 100%;
-  cursor: url('https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/astronaut.png') 80 80, auto; /* 太空人鼠標 */
+  cursor: url('https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/astronaut.png') 32 32, auto; /* 太空人鼠標 */
 }
 
 
