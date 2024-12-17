@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 隨機分布範圍：更大範圍以增加深度效果
     sphere.position.set(
-      (Math.random() - 0.5) * 80, // X軸範圍 -50 到 50
-      (Math.random() - 0.5) * 40,  // Y軸範圍 -25 到 25
-      (Math.random() - 0.5) * 80  // Z軸範圍 -50 到 50
+      (Math.random() - 0.5) * 100, // X軸範圍 -50 到 50
+      (Math.random() - 0.5) * 50,  // Y軸範圍 -25 到 25
+      (Math.random() - 0.5) * 100  // Z軸範圍 -50 到 50
     );
 
     scene.add(sphere);
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  camera.position.z = 100; // 調整攝像機位置，拉遠視角增加深度
+  camera.position.z = 80; // 調整攝像機位置，拉遠視角增加深度
 
   // 更新球體圖片
   function updateSphereImage(data) {
