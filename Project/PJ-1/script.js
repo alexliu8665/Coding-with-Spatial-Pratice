@@ -28,18 +28,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const sphereData = [];
   const categories = Object.keys(imageCategories);
 
-  // 初始化球體（隨機分布和大小）
+  // 初始化球體與随機對應的資訊
   categories.forEach((category, index) => {
-    const randomSize = Math.random() * 1 + 0.5; // 隨機大小 (0.5 - 1.5)
+    const randomSize = Math.random() * 1 + 0.5; // 随機大小 (0.5 - 1.5)
     const texture = textureLoader.load(`./Images/${imageCategories[category][0]}?t=${Date.now()}`);
     const material = new THREE.MeshBasicMaterial({ map: texture });
 
     const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
 
-    // 隨機位置
-    sphere.position.x = (Math.random() - 0.5) * 15; // -5 到 5
-    sphere.position.y = (Math.random() - 0.5) * 8;  // -2.5 到 2.5
-    sphere.position.z = (Math.random() - 0.5) * 15;
+    // 随機位置
+    sphere.position.x = (Math.random() - 0.5) * 15; // x: -7.5 ~ 7.5
+    sphere.position.y = (Math.random() - 0.5) * 8;  // y: -4 ~ 4
+    sphere.position.z = (Math.random() - 0.5) * 15; // z: -7.5 ~ 7.5
 
     scene.add(sphere);
     spheres.push(sphere);
@@ -49,10 +49,15 @@ document.addEventListener("DOMContentLoaded", () => {
       rotationProgress: 0, // 累積旋轉角度
       currentImageIndex: 0, // 當前圖片索引
       originalScale: randomSize, // 初始大小
+      velocity: {
+        x: (Math.random() - 0.5) * 0.05, // 随機速度 -0.025 ~ 0.025
+        y: (Math.random() - 0.5) * 0.05,
+        z: (Math.random() - 0.5) * 0.05,
+      },
     });
   });
 
-  camera.position.z = 15;
+  camera.position.z = 20;
 
   // 更新球體圖片
   function updateSphereImage(sphere, sphereInfo) {
@@ -72,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sphereData.forEach((data, index) => {
       const sphere = spheres[index];
       if (data.category === selectedCategory) {
-        sphere.scale.set(data.originalScale * 5, data.originalScale * 5, data.originalScale * 5); // 放大
+        sphere.scale.set(data.originalScale * 2, data.originalScale * 2, data.originalScale * 2); // 放大
         data.rotationProgress = 0; // 重置旋轉進度
       } else {
         sphere.scale.set(data.originalScale, data.originalScale, data.originalScale); // 恢復原大小
@@ -87,13 +92,24 @@ document.addEventListener("DOMContentLoaded", () => {
     spheres.forEach((sphere, index) => {
       const sphereInfo = sphereData[index];
 
-      sphere.rotation.y += 0.01; // 球體自轉
+      // 球體旋轉
+      sphere.rotation.y += 0.01;
       sphereInfo.rotationProgress += 0.01;
 
-      // 如果旋轉累積進度 >= 2 * Math.PI，則切換到下一張圖片
+      // 球體随機移動
+      sphere.position.x += sphereInfo.velocity.x;
+      sphere.position.y += sphereInfo.velocity.y;
+      sphere.position.z += sphereInfo.velocity.z;
+
+      // 邊界檢查，退回
+      if (sphere.position.x > 7.5 || sphere.position.x < -7.5) sphereInfo.velocity.x *= -1;
+      if (sphere.position.y > 4 || sphere.position.y < -4) sphereInfo.velocity.y *= -1;
+      if (sphere.position.z > 7.5 || sphere.position.z < -7.5) sphereInfo.velocity.z *= -1;
+
+      // 如果旋轉累積進度 >= 2 * Math.PI，更新圖片
       if (sphereInfo.rotationProgress >= 2 * Math.PI) {
-        sphereInfo.rotationProgress = 0; // 重置進度
-        updateSphereImage(sphere, sphereInfo); // 更新圖片
+        sphereInfo.rotationProgress = 0;
+        updateSphereImage(sphere, sphereInfo);
       }
     });
 
