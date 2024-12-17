@@ -2,46 +2,53 @@ document.addEventListener("DOMContentLoaded", () => {
   const sceneContainer = document.getElementById("scene-container");
   const planetSelect = document.getElementById("planetSelect");
 
-  // Set up Three.js scene
+  // Three.js Scene Setup
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   sceneContainer.appendChild(renderer.domElement);
 
-  // Create sphere geometry for image mapping
-  const sphereGeometry = new THREE.SphereGeometry(5, 64, 64); // A smooth sphere
-  const sphereMaterials = [];
-
-  // Preload textures for all categories
-  const textureLoader = new THREE.TextureLoader();
-  const imageCategories = {
-    Energetic: 'https://via.placeholder.com/512/ff0000',
-    Lonely: 'https://via.placeholder.com/512/0000ff',
-    Verdant: 'https://via.placeholder.com/512/00ff00',
-    Oceanic: 'https://via.placeholder.com/512/00ffff',
-    Desolate: 'https://via.placeholder.com/512/aaaaaa',
-    Radiant: 'https://via.placeholder.com/512/ffff00',
-    Mysterious: 'https://via.placeholder.com/512/5500ff',
-    Arid: 'https://via.placeholder.com/512/ffaa00',
-    Futuristic: 'https://via.placeholder.com/512/333333',
-    Azure: 'https://via.placeholder.com/512/00aaff',
-    Luminous: 'https://via.placeholder.com/512/ffffff',
-    Pulsating: 'https://via.placeholder.com/512/ff00ff',
-  };
-
+  // Sphere Geometry
+  const sphereGeometry = new THREE.SphereGeometry(5, 64, 64);
   let currentSphere;
 
+  const textureLoader = new THREE.TextureLoader();
+  
+  // Image mapping loaded from Excel file (simplified for demo)
+  const imageCategories = {
+    Energetic: [1, 13, 25, 37, 49],
+    Lonely: [2, 14, 26, 38, 50],
+    Verdant: [3, 15, 27, 39],
+    Oceanic: [4, 16, 28, 40],
+    Desolate: [5, 17, 29, 41],
+    Radiant: [6, 18, 30, 42],
+    Mysterious: [7, 19, 31, 43],
+    Arid: [8, 20, 32, 44],
+    Futuristic: [9, 21, 33, 45],
+    Azure: [10, 22, 34, 46],
+    Luminous: [11, 23, 35, 47],
+    Pulsating: [12, 24, 36, 48],
+  };
+
+  /**
+   * Load Sphere Texture with the first image of the selected category
+   * @param {string} category
+   */
   function loadSphereTexture(category) {
     if (currentSphere) {
-      scene.remove(currentSphere); // Remove old sphere
+      scene.remove(currentSphere);
     }
 
+    // Use the first image of the selected category as texture
+    const imageIndex = imageCategories[category][0];
+    const texturePath = `./Images/${imageIndex}.JPG`;
+
     const texture = textureLoader.load(
-      imageCategories[category],
-      () => console.log(`Loaded texture for ${category}`),
+      texturePath,
+      () => console.log(`Loaded texture: ${texturePath}`),
       undefined,
-      (err) => console.error('Error loading texture:', err)
+      (err) => console.error(`Error loading texture: ${err}`)
     );
 
     const material = new THREE.MeshBasicMaterial({ map: texture, wireframe: false });
@@ -49,21 +56,18 @@ document.addEventListener("DOMContentLoaded", () => {
     scene.add(currentSphere);
   }
 
-  // Camera position
+  // Camera Position
   camera.position.z = 10;
 
-  // Render loop
+  // Animation Loop
   function animate() {
     requestAnimationFrame(animate);
-    if (currentSphere) {
-      currentSphere.rotation.y += 0.005; // Rotate sphere
-    }
+    if (currentSphere) currentSphere.rotation.y += 0.005;
     renderer.render(scene, camera);
   }
-
   animate();
 
-  // Handle dropdown change
+  // Dropdown Event Listener
   planetSelect.addEventListener("change", () => {
     const selectedCategory = planetSelect.value;
     if (imageCategories[selectedCategory]) {
@@ -71,10 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Load default sphere
+  // Load Default Category
   loadSphereTexture("Energetic");
 
-  // Handle window resize
+  // Resize Event
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
