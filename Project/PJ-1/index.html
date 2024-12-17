@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planet Selector with Three.js</title>
+  <title>A World Reimagined</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
 </head>
 <body>
-  <!-- Overlay for Dropdown Menu -->
+  <div id="scene-container"></div>
   <div class="overlay-text">
-    <span><strong>I would love to live on the planet that is </strong></span>
+    <label for="planetSelect"><strong>Select a Planet:</strong></label>
     <select id="planetSelect">
-      <option value="" disabled selected>Choose...</option>
-      <option value="Energetic">Energetic</option>
+      <option value="Energetic" selected>Energetic</option>
       <option value="Lonely">Lonely</option>
       <option value="Verdant">Verdant</option>
       <option value="Oceanic">Oceanic</option>
@@ -27,10 +26,6 @@
       <option value="Pulsating">Pulsating</option>
     </select>
   </div>
-
-  <!-- Three.js Canvas -->
-  <div id="scene-container"></div>
-
   <script src="script.js"></script>
 </body>
 </html>

@@ -2,20 +2,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const sceneContainer = document.getElementById("scene-container");
   const planetSelect = document.getElementById("planetSelect");
 
-  // Three.js Scene Setup
+  // Three.js 基本設置
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   sceneContainer.appendChild(renderer.domElement);
 
-  // Sphere Geometry
-  const sphereGeometry = new THREE.SphereGeometry(5, 64, 64);
   let currentSphere;
-
   const textureLoader = new THREE.TextureLoader();
-  
-  // Image mapping loaded from Excel file (simplified for demo)
+  const sphereGeometry = new THREE.SphereGeometry(5, 64, 64);
+
+  // 圖片分類數據
   const imageCategories = {
     Energetic: [1, 13, 25, 37, 49],
     Lonely: [2, 14, 26, 38, 50],
@@ -31,54 +29,52 @@ document.addEventListener("DOMContentLoaded", () => {
     Pulsating: [12, 24, 36, 48],
   };
 
-  /**
-   * Load Sphere Texture with the first image of the selected category
-   * @param {string} category
-   */
+  // 加載球體貼圖
   function loadSphereTexture(category) {
-    if (currentSphere) {
-      scene.remove(currentSphere);
+    if (currentSphere) scene.remove(currentSphere); // 清除當前球體
+
+    const imageIndex = imageCategories[category]?.[0]; // 使用該分類的第一張圖片
+    if (!imageIndex) {
+      console.error(`Category "${category}" has no images.`);
+      return;
     }
 
-    // Use the first image of the selected category as texture
-    const imageIndex = imageCategories[category][0];
     const texturePath = `./Images/${imageIndex}.JPG`;
+    console.log(`Loading texture: ${texturePath}`);
 
     const texture = textureLoader.load(
       texturePath,
-      () => console.log(`Loaded texture: ${texturePath}`),
+      () => console.log("Texture loaded successfully."),
       undefined,
-      (err) => console.error(`Error loading texture: ${err}`)
+      () => {
+        console.error(`Failed to load texture: ${texturePath}`);
+        alert("圖片加載失敗，請檢查路徑是否正確！");
+      }
     );
 
-    const material = new THREE.MeshBasicMaterial({ map: texture, wireframe: false });
+    const material = new THREE.MeshBasicMaterial({ map: texture });
     currentSphere = new THREE.Mesh(sphereGeometry, material);
     scene.add(currentSphere);
   }
 
-  // Camera Position
+  // 初始球體設置
   camera.position.z = 10;
 
-  // Animation Loop
   function animate() {
     requestAnimationFrame(animate);
-    if (currentSphere) currentSphere.rotation.y += 0.005;
+    if (currentSphere) currentSphere.rotation.y += 0.005; // 球體旋轉
     renderer.render(scene, camera);
   }
   animate();
 
-  // Dropdown Event Listener
   planetSelect.addEventListener("change", () => {
     const selectedCategory = planetSelect.value;
-    if (imageCategories[selectedCategory]) {
-      loadSphereTexture(selectedCategory);
-    }
+    loadSphereTexture(selectedCategory);
   });
 
-  // Load Default Category
+  // 載入預設分類
   loadSphereTexture("Energetic");
 
-  // Resize Event
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
