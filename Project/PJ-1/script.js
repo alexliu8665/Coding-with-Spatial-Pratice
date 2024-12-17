@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const sceneContainer = document.getElementById("scene-container");
+  const sceneContainer = document.getElementById("sphereContainer"); // 修正這裡
   const planetSelect = document.getElementById("planetSelect");
 
   // Three.js 設置
@@ -16,16 +16,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // 圖片分類與對應圖片列表
   const imageCategories = {
     Arid: ["2.JPG", "6.JPG", "15.JPG", "18.JPG", "20.JPG", "22.JPG", "28.JPG", "34.JPG", "36.JPG"],
-    Desolate: ["1.JPG","5.JPG", "12.JPG", "13.JPG", "37.JPG", "40.JPG","43.JPG", "48.JPG"],
+    Desolate: ["1.JPG", "5.JPG", "12.JPG", "13.JPG", "37.JPG", "40.JPG", "43.JPG", "48.JPG"],
     Lonely: ["33.JPG"],
     Mysterious: ["3.JPG", "26.JPG", "27.JPG", "30.JPG", "31.JPG"],
     Oceanic: ["19.JPG", "23.JPG", "38.JPG", "39.JPG"],
-    Pulsating: ["9.JPG","11.JPG", "14.JPG", "16.JPG", "25.JPG", "35.JPG","42.JPG", "44.JPG","45.JPG", "50.JPG"],
-    Radiant: ["4.JPG","7.JPG", "10.JPG", "17.JPG", "24.JPG", "29.JPG","46.JPG", "49.JPG"],
+    Pulsating: ["9.JPG", "11.JPG", "14.JPG", "16.JPG", "25.JPG", "35.JPG", "42.JPG", "44.JPG", "45.JPG", "50.JPG"],
+    Radiant: ["4.JPG", "7.JPG", "10.JPG", "17.JPG", "24.JPG", "29.JPG", "46.JPG", "49.JPG"],
     Verdant: ["8.JPG", "21.JPG", "32.JPG", "41.JPG", "47.JPG"],
   };
 
-  let currentCategory = "Energetic"; // 預設分類
+  let currentCategory = "Arid"; // 預設分類
   let currentImageIndex = 0; // 當前圖片索引
   let rotationCounter = 0; // 累積旋轉計數
 
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
 
     if (currentSphere) {
-      currentSphere.rotation.y += 0.01; // 球體旋轉速度
+      currentSphere.rotation.y += 0.005; // 球體旋轉速度
 
       // 檢測是否旋轉一整圈
       rotationCounter += 0.01;
