@@ -6,6 +6,7 @@ body, html {
   color: #fff;
   font-family: Arial, sans-serif;
   height: 100%;
+  cursor: url('astronaut.png') 80 80, auto; /* 調整焦點到圖片中心 */
 }
 
 #sphereContainer {
