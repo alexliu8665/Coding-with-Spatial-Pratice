@@ -37,9 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
 
     // 隨機位置
-    sphere.position.x = (Math.random() - 0.5) * 20; // -5 到 5
-    sphere.position.y = (Math.random() - 0.5) * 25;  // -2.5 到 2.5
-    sphere.position.z = (Math.random() - 0.5) * 30;
+    sphere.position.x = (Math.random() - 0.5) * 15; // -5 到 5
+    sphere.position.y = (Math.random() - 0.5) * 8;  // -2.5 到 2.5
+    sphere.position.z = (Math.random() - 0.5) * 15;
 
     scene.add(sphere);
     spheres.push(sphere);
