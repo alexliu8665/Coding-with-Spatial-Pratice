@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       category,
       images: imageCategories[category],
       imageIndex: 0,
-      originalScale: 1, // 原始縮放大小
+      originalScale: 2, // 原始縮放大小
     });
   });
 
