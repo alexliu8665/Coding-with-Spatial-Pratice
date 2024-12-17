@@ -16,7 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const starsGeometry = new THREE.BufferGeometry();
   const positions = [];
   for (let i = 0; i < 5000; i++) {
-    positions.push((Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000);
+    positions.push(
+      (Math.random() - 0.5) * 2000, 
+      (Math.random() - 0.5) * 2000, 
+      (Math.random() - 0.5) * 2000
+    );
   }
   starsGeometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
   const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
@@ -36,9 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const spheres = [];
-  let selectedSphere = null;
-  let selectedSphereRotationProgress = 0;
-  let selectedSphereAngle = 0;
+  let selectedSphere = null; // 選中的球體
+  let selectedSphereRotationProgress = 0; // 旋轉進度
+  let selectedSphereAngle = 0; // 軌跡旋轉角度
 
   // 初始化球體（隨機分布與大小）
   Object.keys(imageCategories).forEach((category) => {
@@ -47,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const randomSize = Math.random() * 4 + 1; // 球體大小範圍：1 ~ 5
     const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
 
-    // 隨機分布範圍：更大範圍以增加深度效果
+    // 隨機分布位置
     sphere.position.set(
       (Math.random() - 0.5) * 100, // X軸範圍 -50 到 50
       (Math.random() - 0.5) * 50,  // Y軸範圍 -25 到 25
@@ -60,11 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
       category,
       images: imageCategories[category],
       imageIndex: 0,
-      originalScale: randomSize,
+      originalScale: randomSize, // 保存原始大小
     });
   });
 
-  camera.position.z = 80; // 調整攝像機位置，拉遠視角增加深度
+  camera.position.z = 100; // 拉遠視角增加深度效果
 
   // 更新球體圖片
   function updateSphereImage(data) {
@@ -80,14 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     spheres.forEach((data) => {
       if (data.category === selectedCategory) {
-        selectedSphere = data;
-        selectedSphereRotationProgress = 0;
+        selectedSphere = data; // 記錄選中的球體
+        selectedSphereRotationProgress = 0; // 重置旋轉進度
         selectedSphereAngle = 0;
 
-        // 放大球體
+        // 放大選中球體
         data.sphere.scale.set(data.originalScale * 3, data.originalScale * 3, data.originalScale * 3);
       } else {
-        // 恢復其他球體大小
+        // 其他球體恢復大小
         data.sphere.scale.set(data.originalScale, data.originalScale, data.originalScale);
       }
     });
@@ -97,20 +101,20 @@ document.addEventListener("DOMContentLoaded", () => {
   function animate() {
     requestAnimationFrame(animate);
 
-    // 星空背景旋轉
+    // 星空背景緩慢旋轉
     stars.rotation.y += 0.0005;
 
     spheres.forEach((data) => {
       data.sphere.rotation.y += 0.01; // 球體自轉
 
       if (data === selectedSphere) {
-        // 移動選中球體，讓其沿背景軌跡旋轉
+        // 選中球體沿背景旋轉軌跡運動
         selectedSphereAngle += 0.002;
-        const radius = 40; // 軌跡半徑
+        const radius = 50; // 軌跡半徑
         data.sphere.position.x = Math.sin(selectedSphereAngle) * radius;
         data.sphere.position.z = Math.cos(selectedSphereAngle) * radius;
 
-        // 切換圖片
+        // 選中球體轉滿一圈後切換圖片
         selectedSphereRotationProgress += 0.01;
         if (selectedSphereRotationProgress >= 2 * Math.PI) {
           selectedSphereRotationProgress = 0;
@@ -124,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animate();
 
+  // 視窗大小變化處理
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
