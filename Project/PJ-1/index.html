@@ -3,41 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Sphere Images</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-
-    #overlay {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-    }
-
-    select {
-      font-size: 16px;
-      padding: 5px;
-    }
-  </style>
+  <title>REIMAGINED wORLD</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <div id="overlay">
-    <label for="planetSelect">Select a Category:</label>
-    <select id="planetSelect">
-      <option value="Energetic">Energetic</option>
-      <option value="Lonely">Lonely</option>
-      <option value="Verdant">Verdant</option>
-      <option value="Oceanic">Oceanic</option>
-    </select>
-  </div>
-  <div id="scene-container"></div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <main>
+    <div class="overlay-text">
+      <span><strong>I would love to live on the planet that is </strong></span>
+      <select id="planetSelect">
+        <option value="Arid">Arid</option>
+        <option value="Desolate">Desolate</option>
+        <option value="Lonely">Lonely</option>
+        <option value="Mysterious">Mysterious</option>
+        <option value="Oceanic">Oceanic</option>
+        <option value="Pulsating">Pulsating</option>
+        <option value="Radiant">Radiant</option>
+        <option value="Verdant">Verdant</option>
+      </select>
+    </div>
+    <div id="sphereContainer"></div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
