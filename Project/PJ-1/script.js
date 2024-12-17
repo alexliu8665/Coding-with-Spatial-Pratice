@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sphereContainer = document.getElementById("sphereContainer");
   const planetSelect = document.getElementById("planetSelect");
 
-  // Three.js 設置
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -13,94 +12,67 @@ document.addEventListener("DOMContentLoaded", () => {
   const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 
   // 星空背景
-  function createStars() {
-    const starsGeometry = new THREE.BufferGeometry();
-    const starsCount = 3000; // 星星數量
-    const positions = [];
-
-    for (let i = 0; i < starsCount; i++) {
-      positions.push((Math.random() - 0.5) * 1000);
-      positions.push((Math.random() - 0.5) * 1000);
-      positions.push((Math.random() - 0.5) * 1000);
-    }
-
-    starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.7, opacity: 0.8 });
-    const stars = new THREE.Points(starsGeometry, starsMaterial);
-    scene.add(stars);
-
-    function animateStars() {
-      stars.rotation.y += 0.0002; // 星空旋轉效果
-    }
-    return animateStars;
+  const starsGeometry = new THREE.BufferGeometry();
+  const positions = [];
+  for (let i = 0; i < 5000; i++) {
+    positions.push((Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000);
   }
-  const animateStars = createStars();
+  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+  const stars = new THREE.Points(starsGeometry, starsMaterial);
+  scene.add(stars);
+
+  const imageCategories = {
+    Arid: ["2.JPG", "6.JPG", "15.JPG", "18.JPG", "20.JPG", "22.JPG", "28.JPG", "34.JPG", "36.JPG"],
+    Desolate: ["1.JPG", "5.JPG", "12.JPG", "13.JPG", "37.JPG", "40.JPG", "43.JPG", "48.JPG"],
+    Lonely: ["33.JPG"],
+    Mysterious: ["3.JPG", "26.JPG", "27.JPG", "30.JPG", "31.JPG"],
+    Oceanic: ["19.JPG", "23.JPG", "38.JPG", "39.JPG"],
+    Pulsating: ["9.JPG", "11.JPG", "14.JPG", "16.JPG", "25.JPG", "35.JPG", "42.JPG", "44.JPG", "45.JPG", "50.JPG"],
+    Radiant: ["4.JPG", "7.JPG", "10.JPG", "17.JPG", "24.JPG", "29.JPG", "46.JPG", "49.JPG"],
+    Verdant: ["8.JPG", "21.JPG", "32.JPG", "41.JPG", "47.JPG"],
+  };
 
   const spheres = [];
-  const sphereData = [];
-  const categories = ["Arid", "Desolate", "Lonely", "Mysterious", "Oceanic", "Pulsating", "Radiant", "Verdant"];
-
   let selectedSphere = null;
 
-  // 初始化球體
-  categories.forEach((category, index) => {
-    const randomSize = Math.random() * 1 + 0.5;
-    const texture = textureLoader.load(`./Images/${category}.JPG`);
+  Object.keys(imageCategories).forEach((category) => {
+    const texture = textureLoader.load(`./Images/${imageCategories[category][0]}`);
     const material = new THREE.MeshBasicMaterial({ map: texture });
-
-    const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
-    sphere.position.set((Math.random() - 0.5) * 30, (Math.random() - 0.5) * 15, (Math.random() - 0.5) * 30);
-
+    const sphere = new THREE.Mesh(sphereGeometry, material);
+    sphere.position.set((Math.random() - 0.5) * 60, (Math.random() - 0.5) * 30, (Math.random() - 0.5) * 60);
     scene.add(sphere);
-    spheres.push(sphere);
-    sphereData.push({ category, originalScale: randomSize, speed: { x: 0, y: 0, z: 0 } });
+    spheres.push({ sphere, category, images: imageCategories[category], imageIndex: 0 });
   });
 
-  camera.position.z = 20;
-
-  // 選單選擇事件
   planetSelect.addEventListener("change", () => {
     const selectedCategory = planetSelect.value;
-
-    spheres.forEach((sphere, index) => {
-      const data = sphereData[index];
-
+    spheres.forEach((data) => {
       if (data.category === selectedCategory) {
-        selectedSphere = sphere;
-        data.speed.x = (Math.random() - 0.5) * 0.05;
-        data.speed.y = (Math.random() - 0.5) * 0.05;
-        data.speed.z = (Math.random() - 0.5) * 0.05;
-
-        sphere.scale.set(data.originalScale * 3, data.originalScale * 3, data.originalScale * 3);
+        selectedSphere = data;
+        data.sphere.scale.set(3, 3, 3);
       } else {
-        sphere.scale.set(data.originalScale, data.originalScale, data.originalScale);
-        data.speed = { x: 0, y: 0, z: 0 };
+        data.sphere.scale.set(1, 1, 1);
       }
     });
   });
 
-  // 動畫循環
   function animate() {
     requestAnimationFrame(animate);
-    animateStars();
+    stars.rotation.y += 0.0005;
 
-    spheres.forEach((sphere, index) => {
-      const data = sphereData[index];
-      sphere.rotation.y += 0.01;
+    spheres.forEach((data) => {
+      data.sphere.rotation.y += 0.01;
 
-      if (sphere === selectedSphere) {
-        sphere.position.x += data.speed.x;
-        sphere.position.y += data.speed.y;
-        sphere.position.z += data.speed.z;
-
-        if (Math.abs(sphere.position.x) > 15) data.speed.x *= -1;
-        if (Math.abs(sphere.position.y) > 10) data.speed.y *= -1;
-        if (Math.abs(sphere.position.z) > 15) data.speed.z *= -1;
+      if (data === selectedSphere) {
+        data.sphere.position.x += 0.1 * Math.sin(Date.now() * 0.001);
+        data.sphere.position.z += 0.1 * Math.cos(Date.now() * 0.001);
       }
     });
 
     renderer.render(scene, camera);
   }
+
   animate();
 
   window.addEventListener("resize", () => {

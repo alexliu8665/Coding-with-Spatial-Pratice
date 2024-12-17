@@ -1,16 +1,14 @@
-/* 全局樣式 */
 body, html {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #000; /* 背景設為黑色 */
-  color: #fff; /* 字體顏色 */
+  background-color: #000;
+  color: #fff;
   font-family: Arial, sans-serif;
   height: 100%;
-  cursor: url('https://alexliu8665.github.io/Coding-with-Spatial-Pratice/Project/PJ-1/astronaut.png') 32 32, auto; /* 太空人鼠標 */
+  cursor: url('astronaut.png') 80 80, auto; /* 太空人鼠標 */
 }
 
-/* Three.js 容器 */
 #sphereContainer {
   position: absolute;
   top: 0;
@@ -19,7 +17,6 @@ body, html {
   height: 100%;
 }
 
-/* 選單樣式 */
 .overlay-text {
   position: absolute;
   top: 20px;
