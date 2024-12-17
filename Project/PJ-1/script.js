@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 放大選中球體
         data.sphere.scale.set(data.originalScale * 3, data.originalScale * 3, data.originalScale * 3);
       } else {
-        // 其他球體恢復大小
+        // 嚴格限制非選中球體恢復大小
         data.sphere.scale.set(data.originalScale, data.originalScale, data.originalScale);
       }
     });
