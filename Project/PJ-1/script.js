@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const positions = [];
   for (let i = 0; i < 5000; i++) {
     positions.push(
-      (Math.random() - 0.5) * 2000, 
-      (Math.random() - 0.5) * 2000, 
+      (Math.random() - 0.5) * 2000,
+      (Math.random() - 0.5) * 2000,
       (Math.random() - 0.5) * 2000
     );
   }
@@ -29,10 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 圖片分類與對應圖片列表
   const imageCategories = {
-    Arid: ["2.JPG", "6.JPG", "15.JPG"],
-    Desolate: ["1.JPG", "5.JPG"],
+    Arid: ["2.JPG", "6.JPG", "15.JPG", "18.JPG", "20.JPG", "22.JPG", "28.JPG", "34.JPG", "36.JPG"],
+    Desolate: ["1.JPG", "5.JPG", "12.JPG", "13.JPG", "37.JPG", "40.JPG", "43.JPG", "48.JPG"],
     Lonely: ["33.JPG"],
-    Mysterious: ["3.JPG", "26.JPG"],
+    Mysterious: ["3.JPG", "26.JPG", "27.JPG", "30.JPG", "31.JPG"],
+    Oceanic: ["19.JPG", "23.JPG", "38.JPG", "39.JPG"],
+    Pulsating: ["9.JPG", "11.JPG", "14.JPG", "16.JPG", "25.JPG", "35.JPG", "42.JPG", "44.JPG", "45.JPG", "50.JPG"],
+    Radiant: ["4.JPG", "7.JPG", "10.JPG", "17.JPG", "24.JPG", "29.JPG", "46.JPG", "49.JPG"],
+    Verdant: ["8.JPG", "21.JPG", "32.JPG", "41.JPG", "47.JPG"],
   };
 
   const spheres = [];
@@ -47,20 +51,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const randomSize = Math.random() * 4 + 1; // 球體大小範圍：1 ~ 5
     const sphere = new THREE.Mesh(sphereGeometry.clone().scale(randomSize, randomSize, randomSize), material);
 
-    // 隨機分布位置
+    // Glow 外殼（稍大一點的球體）
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffff00, // Glow 顏色 (黃色)
+      transparent: true,
+      opacity: 0.5, // 半透明
+      side: THREE.BackSide, // 讓它包裹外部
+    });
+    const glowShell = new THREE.Mesh(
+      sphereGeometry.clone().scale(randomSize * 1.2, randomSize * 1.2, randomSize * 1.2),
+      glowMaterial
+    );
+    scene.add(glowShell);
+
     sphere.position.set(
-      (Math.random() - 0.5) * 100, 
-      (Math.random() - 0.5) * 50,  
+      (Math.random() - 0.5) * 100,
+      (Math.random() - 0.5) * 50,
       (Math.random() - 0.5) * 100
     );
 
     scene.add(sphere);
     spheres.push({
       sphere,
+      glowShell,
       category,
       images: imageCategories[category],
       imageIndex: 0,
-      originalScale: randomSize, // 保存原始大小
+      originalScale: randomSize,
     });
   });
 
@@ -84,11 +101,14 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedSphereAngle = 0; // 重置角度
         selectedSphereRotationProgress = 0; // 重置進度
 
-        // 放大選中球體
+        // 放大選中球體和 Glow 外殼
         data.sphere.scale.set(data.originalScale * 3, data.originalScale * 3, data.originalScale * 3);
+        data.glowShell.visible = true; // 顯示 Glow 效果
+        data.glowShell.scale.set(data.originalScale * 3.2, data.originalScale * 3.2, data.originalScale * 3.2);
       } else {
         // 其他球體恢復到初始大小
         data.sphere.scale.set(data.originalScale, data.originalScale, data.originalScale);
+        data.glowShell.visible = false; // 隱藏 Glow 效果
       }
     });
   });
@@ -109,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const radius = 50; // 軌跡半徑
         data.sphere.position.x = Math.sin(selectedSphereAngle) * radius;
         data.sphere.position.z = Math.cos(selectedSphereAngle) * radius;
+        data.glowShell.position.copy(data.sphere.position); // Glow 跟隨球體
 
         // 選中球體旋轉一圈後切換圖片
         selectedSphereRotationProgress += 0.01;
